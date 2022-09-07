@@ -788,7 +788,7 @@
               break;
             }
           }
-          this.maxmatching = this.computemaximummatching();
+//           this.maxmatching = this.computemaximummatching();
           this.iscaterpillar = this.computeisgraphcaterpillar();
           // compute burning number
           for(let i = 0; i< this.graphlist.length; i++){
@@ -2135,10 +2135,10 @@
           document.getElementById("hasgoodpartition").innerHTML= thegraph.hasgoodpartition +"";
           document.getElementById("hashamiltonianpath").innerHTML = thegraph.hashamiltonianpath+"";
           document.getElementById("ahamiltonianpath").innerHTML = thegraph.ahamiltonianpath+"";
-          var hasperfectmatching = thegraph.maxmatching.length == Math.ceil(thegraph.graphlist.length /2);
-          document.getElementById("hasperfectmatching").innerHTML= hasperfectmatching +"";
-          document.getElementById("sizeofmaximummatching").innerHTML = thegraph.maxmatching.length+"";
-          document.getElementById("amaximummatching").innerHTML = thegraph.maxmatching+"";
+//           var hasperfectmatching = thegraph.maxmatching.length == Math.ceil(thegraph.graphlist.length /2);
+//           document.getElementById("hasperfectmatching").innerHTML= hasperfectmatching +"";
+//           document.getElementById("sizeofmaximummatching").innerHTML = thegraph.maxmatching.length+"";
+//           document.getElementById("amaximummatching").innerHTML = thegraph.maxmatching+"";
           document.getElementById("burningnumber").innerHTML = thegraph.minburnseqlen+"";
           document.getElementById("burningnumbersequence").innerHTML = thegraph.minburningsequence+"";
           document.getElementById("iscaterpillartree").innerHTML = thegraph.iscaterpillar+"";
@@ -2176,10 +2176,10 @@
           document.getElementById("n2hasgoodpartition").innerHTML= thegraph.hasgoodpartition +"";
           document.getElementById("n2hashamiltonianpath").innerHTML = thegraph.hashamiltonianpath+"";
           document.getElementById("n2ahamiltonianpath").innerHTML = thegraph.ahamiltonianpath+"";
-          var hasperfectmatching = thegraph.maxmatching.length == Math.ceil(thegraph.graphlist.length /2);
-          document.getElementById("n2hasperfectmatching").innerHTML= hasperfectmatching +"";
-          document.getElementById("n2sizeofmaximummatching").innerHTML = thegraph.maxmatching.length+"";
-          document.getElementById("n2amaximummatching").innerHTML = thegraph.maxmatching+"";
+//           var hasperfectmatching = thegraph.maxmatching.length == Math.ceil(thegraph.graphlist.length /2);
+//           document.getElementById("n2hasperfectmatching").innerHTML= hasperfectmatching +"";
+//           document.getElementById("n2sizeofmaximummatching").innerHTML = thegraph.maxmatching.length+"";
+//           document.getElementById("n2amaximummatching").innerHTML = thegraph.maxmatching+"";
           document.getElementById("n2burningnumber").innerHTML = thegraph.minburnseqlen+"";
           document.getElementById("n2burningnumbersequence").innerHTML = thegraph.minburningsequence+"";
           document.getElementById("n2iscaterpillartree").innerHTML = thegraph.iscaterpillar+"";
@@ -2217,10 +2217,10 @@
           document.getElementById("combhasgoodpartition").innerHTML= thegraph.hasgoodpartition +"";
           document.getElementById("combhashamiltonianpath").innerHTML = thegraph.hashamiltonianpath+"";
           document.getElementById("combahamiltonianpath").innerHTML = thegraph.ahamiltonianpath+"";
-          var hasperfectmatching = thegraph.maxmatching.length == Math.ceil(thegraph.graphlist.length /2);
-          document.getElementById("combhasperfectmatching").innerHTML= hasperfectmatching +"";
-          document.getElementById("combsizeofmaximummatching").innerHTML = thegraph.maxmatching.length+"";
-          document.getElementById("combamaximummatching").innerHTML = thegraph.maxmatching+"";
+//           var hasperfectmatching = thegraph.maxmatching.length == Math.ceil(thegraph.graphlist.length /2);
+//           document.getElementById("combhasperfectmatching").innerHTML= hasperfectmatching +"";
+//           document.getElementById("combsizeofmaximummatching").innerHTML = thegraph.maxmatching.length+"";
+//           document.getElementById("combamaximummatching").innerHTML = thegraph.maxmatching+"";
           document.getElementById("combburningnumber").innerHTML = thegraph.minburnseqlen+"";
           document.getElementById("combburningnumbersequence").innerHTML = thegraph.minburningsequence+"";
           document.getElementById("combiscaterpillartree").innerHTML = thegraph.iscaterpillar+"";
