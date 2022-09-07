@@ -1,0 +1,3118 @@
+<!doctype html>
+<html>
+  <head>
+    <title>   Graph Software </title>
+    <meta charset="utf-8">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- vistwork -->
+    <script type="text/javascript" src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
+
+    <!-- page speccifc css-->
+    <style type="text/css">
+      #mynetwork {
+        width: 800px;
+        height: 600px;
+        border: 2px solid lightgray;
+      }
+      #n2mynetwork {
+        width: 800px;
+        height: 600px;
+        border: 2px solid lightgray;
+      }
+      #combmynetwork {
+        width: 800px;
+        height: 600px;
+        border: 2px solid lightgray;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Graph software using Visnetwork</h2>
+
+    <p>Create a simple network with some nodes and edges.</p>
+
+    <div class="container text-center">
+      <h2>Graph #1</h2>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="nname" >Node Label:</label>
+          <input type="text" id="nname" name="node_label">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="addNode()">Add Node</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="edgenname1" >Node1 Label:</label>
+          <input type="text" id="edgenname1" name="edge_node_label1">
+        </div>
+        <div class="col-sm-4">
+          <label for="edgenname2" >Node2 Label:</label>
+          <input type="text" id="edgenname2" name="edge_node_label2">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="addEdge()">Add Edge</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="completenvertices" >Number of Vertices:</label>
+          <input type="number" step="1" id="completenvertices" name="completenvertices">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="generatecomplete()">Generate Complete Graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="pathnvertices" >Number of Vertices:</label>
+          <input type="number" step="1" id="pathnvertices" name="pathnvertices">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="generatepath()">Generate Path Graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="starnvertices" >Number of Vertices:</label>
+          <input type="number" step="1" id="starnvertices" name="starnvertices">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="generatestar()">Generate Star Graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="turannnode" >Number of Nodes:</label>
+          <input type="number" step="1" id="turannnode" name="turannnode">
+        </div>
+        <div class="col-sm-4">
+          <label for="turannparts" >Number of parts:</label>
+          <input type="number" step="1" id="turannparts" name="turannparts">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="createturan()">Generate Turan Graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="completebipartitennodea" >Number of nodes in partition A:</label>
+          <input type="number" step="1" id="completebipartitennodea" name="completebipartitennodea">
+        </div>
+        <div class="col-sm-4">
+          <label for="completebipartitennodeb" >Number of nodes in partition B:</label>
+          <input type="number" step="1" id="completebipartitennodeb" name="completebipartitennodeb">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="createcompletebipartite()">Generate complete bipartite graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="gridnrows" >Number of rows:</label>
+          <input type="number" step="1" id="gridnrows" name="gridnrows">
+        </div>
+        <div class="col-sm-4">
+          <label for="gridncolumns" >Number of columns:</label>
+          <input type="number" step="1" id="gridncolumns" name="gridncolumns">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="creategridgraph()">Generate grid graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="cyclicnnode" >Number of vertices:</label>
+          <input type="number" step="1" id="cyclicnnode" name="cyclicnnode">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="createcyclicgraph()">Generate cyclic graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="randomtreennode" >Number of vertices:</label>
+          <input type="number" step="1" id="randomtreennode" name="randomtreennode">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="createrandomtree()">Generate random tree</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="caterpillartreennode" >Number of vertices:</label>
+          <input type="number" step="1" id="caterpillartreennode" name="caterpillartreennode">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="createcaterpillartree()">Generate caterpillar tree</button>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="container" id="mynetwork"></div>
+          <button type="button" class="btn btn-primary" onclick="deleteselectednode()">Delete selected node</button>
+          <button type="button" class="btn btn-primary" onclick="deleteselectededge()">Delete selected edge</button>
+          <button type="button" class="btn btn-primary" onclick="subdivideselectededge()">Subdivide edge</button>
+          <button type="button" class="btn btn-primary" onclick="contractselectededge()">Contract edge</button>  
+          <button type="button" class="btn btn-primary" onclick="undooperation()">Undo</button>  
+          <button type="button" class="btn btn-primary" onclick="redooperation()">Redo</button>  
+        </div>
+        <div class="col-sm-4">
+          <div id="graphproperties"> 
+            <table class= "table table-striped-columns">
+              <thead>
+                <tr>
+                  <b>Global properties</b>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Maximum Degree</td>
+                  <td id="maximumdegree"></td>
+                  <td>Minimum Degree</td>
+                  <td id="minimumdegree"></td>
+                </tr>
+                <tr>
+                  <td>Average Degree</td>
+                  <td id="averagedegree"></td>
+                  <td>Bipartite</td>
+                  <td id="isbipartite"></td>
+                </tr>
+                <tr>
+                  <td title="Tree with all degree odd." >Is basic odd graph</td>
+                  <td id="isbasicodd"></td>
+                  <td>f_i(G)</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td title="Vertex partition so that induced subgraph has all degree odd.">Has Good Partition</td>
+                  <td id = "hasgoodpartition"></td>
+                  <td>Has perfect matching</td>
+                  <td id = "hasperfectmatching"></td>
+                </tr>
+                <tr>
+                  <td title="">Size of maximum matching</td>
+                  <td id = "sizeofmaximummatching"></td>
+                  <td>A maximum matching</td>
+                  <td id = "amaximummatching"></td>
+                </tr>
+                <tr>
+                  <td title="">Has Hamiltonian Path</td>
+                  <td id = "hashamiltonianpath"></td>
+                  <td>A hamiltonian path</td>
+                  <td id = "ahamiltonianpath"></td>
+                </tr>
+                <tr>
+                  <td title=""><a href="https://arxiv.org/abs/2009.10642">Burning number</a></td>
+                  <td id = "burningnumber"></td>
+                  <td>Burning Sequence</td>
+                  <td id = "burningnumbersequence"></td>
+                </tr>
+                <tr>
+                  <td title="A tree where removal of its leaves gives a path graph"><a href="https://mathworld.wolfram.com/CaterpillarGraph.html">Is caterpillar tree</a></td>
+                  <td id = "iscaterpillartree"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><a href="https://en.wikipedia.org/wiki/Graceful_labeling">Graceful</a></td>
+                  <td id = "isgracefulid"></td>
+                  <td>A graceful label</td>
+                  <td id = "agracefullabelid"></td>
+                </tr>
+              </tbody>
+            </table>
+            <table class= "table table-striped-columns">
+              <thead>
+                <tr>
+                  <b>Inspection Properties</b>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Selected Vertex</td>
+                  <td id="selectedvertexlabel"></td>
+                  <td>Selected Edge</td>
+                  <td id ="selectededgelabel"></td>
+                </tr>
+                <tr>
+                  <td>Degree of Vertex</td>
+                  <td id ="degofvertex"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <table id="adjacentmatrixtableid">
+            </table>
+          </div>
+        </div>
+      </div>
+      <p> 讯息:(Message) <span id = "tagMessage"></span></p><br>
+    </div>
+
+    <div class="container text-center">
+      <h2>Graph #2</h2>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="n2nname" >Node Label:</label>
+          <input type="text" id="n2nname" name="n2node_label">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2addNode()">Add Node</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="n2edgenname1" >Node1 Label:</label>
+          <input type="text" id="n2edgenname1" name="n2edge_node_label1">
+        </div>
+        <div class="col-sm-4">
+          <label for="n2edgenname2" >Node2 Label:</label>
+          <input type="text" id="n2edgenname2" name="n2edge_node_label2">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2addEdge()">Add Edge</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="n2completenvertices" >Number of Vertices:</label>
+          <input type="number" step="1" id="n2completenvertices" name="n2completenvertices">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2generatecomplete()">Generate Complete Graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="n2pathnvertices" >Number of Vertices:</label>
+          <input type="number" step="1" id="n2pathnvertices" name="n2pathnvertices">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2generatepath()">Generate Path Graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="n2starnvertices" >Number of Vertices:</label>
+          <input type="number" step="1" id="n2starnvertices" name="n2starnvertices">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2generatestar()">Generate Star Graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="n2turannnode" >Number of Nodes:</label>
+          <input type="number" step="1" id="n2turannnode" name="n2turannnode">
+        </div>
+        <div class="col-sm-4">
+          <label for="n2turannparts" >Number of parts:</label>
+          <input type="number" step="1" id="n2turannparts" name="n2turannparts">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2createturan()">Generate Turan Graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="n2completebipartitennodea" >Number of nodes in partition A:</label>
+          <input type="number" step="1" id="n2completebipartitennodea" name="n2completebipartitennodea">
+        </div>
+        <div class="col-sm-4">
+          <label for="n2completebipartitennodeb" >Number of nodes in partition B:</label>
+          <input type="number" step="1" id="n2completebipartitennodeb" name="n2completebipartitennodeb">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2createcompletebipartite()">Generate complete bipartite graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="n2gridnrows" >Number of rows:</label>
+          <input type="number" step="1" id="n2gridnrows" name="n2gridnrows">
+        </div>
+        <div class="col-sm-4">
+          <label for="n2gridncolumns" >Number of columns:</label>
+          <input type="number" step="1" id="n2gridncolumns" name="n2gridncolumns">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2creategridgraph()">Generate grid graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="n2cyclicnnode" >Number of vertices:</label>
+          <input type="number" step="1" id="n2cyclicnnode" name="n2cyclicnnode">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2createcyclicgraph()">Generate cyclic graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="n2randomtreennode" >Number of vertices:</label>
+          <input type="number" step="1" id="n2randomtreennode" name="n2randomtreennode">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2createrandomtree()">Generate random tree</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <label for="n2caterpillartreennode" >Number of vertices:</label>
+          <input type="number" step="1" id="n2caterpillartreennode" name="n2caterpillartreennode">
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="n2createcaterpillartree()">Generate caterpillar tree</button>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="container" id="n2mynetwork"></div>
+          <button type="button" class="btn btn-primary" onclick="n2deleteselectednode()">Delete selected node</button>
+          <button type="button" class="btn btn-primary" onclick="n2deleteselectededge()">Delete selected edge</button>
+          <button type="button" class="btn btn-primary" onclick="n2subdivideselectededge()">Subdivide edge</button>
+          <button type="button" class="btn btn-primary" onclick="n2contractselectededge()">Contract edge</button>  
+          <button type="button" class="btn btn-primary" onclick="n2undooperation()">Undo</button>  
+          <button type="button" class="btn btn-primary" onclick="n2redooperation()">Redo</button>     
+        </div>
+        <div class="col-sm-4">
+          <div id="n2graphproperties"> 
+            <table class= "table table-striped-columns">
+              <thead>
+                <tr>
+                  <b>Global properties</b>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Maximum Degree</td>
+                  <td id="n2maximumdegree"></td>
+                  <td>Minimum Degree</td>
+                  <td id="n2minimumdegree"></td>
+                </tr>
+                <tr>
+                  <td>Average Degree</td>
+                  <td id="n2averagedegree"></td>
+                  <td>Bipartite</td>
+                  <td id="n2isbipartite"></td>
+                </tr>
+                <tr>
+                  <td title="Tree with all degree odd." >Is basic odd graph</td>
+                  <td id="n2isbasicodd"></td>
+                  <td>f_i(G)</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td title="Vertex partition so that induced subgraph has all degree odd.">Has Good Partition</td>
+                  <td id = "n2hasgoodpartition"></td>
+                  <td>Has perfect matching</td>
+                  <td id = "n2hasperfectmatching"></td>
+                </tr>
+                <tr>
+                  <td title="">Size of maximum matching</td>
+                  <td id = "n2sizeofmaximummatching"></td>
+                  <td>A maximum matching</td>
+                  <td id = "n2amaximummatching"></td>
+                </tr>
+                <tr>
+                  <td title="">Has Hamiltonian Path</td>
+                  <td id = "n2hashamiltonianpath"></td>
+                  <td>A hamiltonian path</td>
+                  <td id = "n2ahamiltonianpath"></td>
+                </tr>
+                <tr>
+                  <td title="A tree where removal of its leaves gives a path graph"><a href = "https://arxiv.org/pdf/2009.10642.pdf">Burning number</a></td>
+                  <td id = "n2burningnumber"></td>
+                  <td>Burning Sequence</td>
+                  <td id = "n2burningnumbersequence"></td>
+                </tr>
+                <tr>
+                  <td><a href="https://mathworld.wolfram.com/CaterpillarGraph.html">Is caterpillar tree</a></td>
+                  <td id = "n2iscaterpillartree"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><a href="https://en.wikipedia.org/wiki/Graceful_labeling">Graceful</a></td>
+                  <td id = "n2isgracefulid"></td>
+                  <td>A graceful label</td>
+                  <td id = "n2agracefullabelid"></td>
+                </tr>
+              </tbody>
+            </table>
+            <table class= "table table-striped-columns">
+              <thead>
+                <tr>
+                  <b>Inspection Properties</b>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Selected Vertex</td>
+                  <td id="n2selectedvertexlabel"></td>
+                  <td>Selected Edge</td>
+                  <td id ="n2selectededgelabel"></td>
+                </tr>
+                <tr>
+                  <td>Degree of Vertex</td>
+                  <td id ="n2degofvertex"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <table id="n2adjacentmatrixtableid">
+            </table>
+          </div>
+        </div>
+      </div>
+      <p> 讯息:(Message) <span id = "n2tagMessage"></span></p><br>
+    </div>
+
+    <div class="container text-center">
+      <h2>Graph Operations</h2>
+      <div class="row">
+        <div class="col-sm-4">
+          Selecting graph G<br>
+          <input type="radio" id="expGG1" name="expGSelect" value="g1">
+          <label for="expGG1">Graph #1</label><br>
+          <input type="radio" id="expGG2" name="expGSelect" value="g2">
+          <label for="expGG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          Selecting Graph H<br>
+          <input type="radio" id="expHG1" name="expHSelect" value="g1">
+          <label for="expHG1">Graph #1</label><br>
+          <input type="radio" id="expHG2" name="expHSelect" value="g2">
+          <label for="expHG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="generateexponentialgraph()">Compute exponential graph G^H</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          Selecting graph G<br>
+          <input type="radio" id="categoricalproductGG1" name="categoricalproductGSelect" value="g1">
+          <label for="categoricalproductGG1">Graph #1</label><br>
+          <input type="radio" id="categoricalproductGG2" name="categoricalproductGSelect" value="g2">
+          <label for="categoricalproductGG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          Selecting Graph H<br>
+          <input type="radio" id="categoricalproductHG1" name="categoricalproductHSelect" value="g1">
+          <label for="categoricalproductHG1">Graph #1</label><br>
+          <input type="radio" id="categoricalproductHG2" name="categoricalproductHSelect" value="g2">
+          <label for="categoricalproductHG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="generatecategoricalproduct()">Compute Categorical product GxH</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          Selecting graph G<br>
+          <input type="radio" id="cartesianproductGG1" name="cartesianproductGSelect" value="g1">
+          <label for="cartesianproductGG1">Graph #1</label><br>
+          <input type="radio" id="cartesianproductGG2" name="cartesianproductGSelect" value="g2">
+          <label for="cartesianproductGG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          Selecting Graph H<br>
+          <input type="radio" id="cartesianproductHG1" name="cartesianproductHSelect" value="g1">
+          <label for="cartesianproductHG1">Graph #1</label><br>
+          <input type="radio" id="cartesianproductHG2" name="cartesianproductHSelect" value="g2">
+          <label for="cartesianproductHG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="generatecartesianproduct()">Compute Cartesian product of G and H</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          Selecting graph G<br>
+          <input type="radio" id="strongproductGG1" name="strongproductGSelect" value="g1">
+          <label for="strongproductGG1">Graph #1</label><br>
+          <input type="radio" id="strongproductGG2" name="strongproductGSelect" value="g2">
+          <label for="strongproductGG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          Selecting Graph H<br>
+          <input type="radio" id="strongproductHG1" name="strongproductHSelect" value="g1">
+          <label for="strongproductHG1">Graph #1</label><br>
+          <input type="radio" id="strongproductHG2" name="strongproductHSelect" value="g2">
+          <label for="strongproductHG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="generatestrongproduct()">Compute strong product of G and H</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          Selecting graph G<br>
+          <input type="radio" id="lineGG1" name="lineGSelect" value="g1">
+          <label for="lineGG1">Graph #1</label><br>
+          <input type="radio" id="lineGG2" name="lineGSelect" value="g2">
+          <label for="lineGG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="generatelinegraph()">Compute G's line graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          Selecting graph G<br>
+          <input type="radio" id="complementGG1" name="complementGSelect" value="g1">
+          <label for="complementGG1">Graph #1</label><br>
+          <input type="radio" id="complementGG2" name="complementGSelect" value="g2">
+          <label for="complementGG2">Graph #2</label><br>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-primary" onclick="generatecomplementgraph()">Compute G's complement graph</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="container" id="combmynetwork"></div>
+          <button type="button" class="btn btn-primary" onclick="combdeleteselectednode()">Delete selected node</button>
+          <button type="button" class="btn btn-primary" onclick="combdeleteselectededge()">Delete selected edge</button>
+          <button type="button" class="btn btn-primary" onclick="combsubdivideselectededge()">Subdivide edge</button>
+          <button type="button" class="btn btn-primary" onclick="combcontractselectededge()">Contract edge</button> 
+          <button type="button" class="btn btn-primary" onclick="combundooperation()">Undo</button>  
+          <button type="button" class="btn btn-primary" onclick="combredooperation()">Redo</button>  
+          <button type="button" class="btn btn-primary" onclick="combcopytograph1()">Copy to graph1</button>  
+          <button type="button" class="btn btn-primary" onclick="combcopytograph2()">Copy to graph2</button> 
+        </div>
+        <div class="col-sm-4">
+          <table class= "table table-striped-columns">
+            <thead>
+              <tr>
+                <b>Global properties</b>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Maximum Degree</td>
+                <td id="combmaximumdegree"></td>
+                <td>Minimum Degree</td>
+                <td id="combminimumdegree"></td>
+              </tr>
+              <tr>
+                <td>Average Degree</td>
+                <td id="combaveragedegree"></td>
+                <td>Bipartite</td>
+                <td id="combisbipartite"></td>
+              </tr>
+              <tr>
+                <td title="Tree with all degree odd." >Is basic odd graph</td>
+                <td id="combisbasicodd"></td>
+                <td>f_i(G)</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td title="Vertex partition so that induced subgraph has all degree odd.">Has Good Partition</td>
+                <td id = "combhasgoodpartition"></td>
+                <td>Has perfect matching</td>
+                <td id = "combhasperfectmatching"></td>
+              </tr>
+              <tr>
+                <td title="">Size of maximum matching</td>
+                <td id = "combsizeofmaximummatching"></td>
+                <td>A maximum matching</td>
+                <td id = "combamaximummatching"></td>
+              </tr>
+              <tr>
+                <td title="">Has Hamiltonian Path</td>
+                <td id = "combhashamiltonianpath"></td>
+                <td>A hamiltonian path</td>
+                <td id = "combahamiltonianpath"></td>
+              </tr>
+              <tr>
+                  <td title=""><a href = "https://arxiv.org/pdf/2009.10642.pdf">Burning number</a></td>
+                  <td id = "combburningnumber"></td>
+                  <td>Burning Sequence</td>
+                  <td id = "combburningnumbersequence"></td>
+                </tr>
+                <tr>
+                  <td title = "A tree where removal of its leaves gives a path graph"><a href="https://mathworld.wolfram.com/CaterpillarGraph.html">Is caterpillar tree</a></td>
+                  <td id = "combiscaterpillartree"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><a href="https://en.wikipedia.org/wiki/Graceful_labeling">Graceful</a></td>
+                  <td id = "combisgracefulid"></td>
+                  <td>A graceful label</td>
+                  <td id = "combagracefullabelid"></td>
+                </tr>
+            </tbody>
+          </table>
+          <table class= "table table-striped-columns">
+            <thead>
+              <tr>
+                <b>Inspection Properties</b>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Selected Vertex</td>
+                <td id="combselectedvertexlabel"></td>
+                <td>Selected Edge</td>
+                <td id ="combselectededgelabel"></td>
+              </tr>
+              <tr>
+                <td>Degree of Vertex</td>
+                <td id ="combdegofvertex"></td>
+                <td>Node function</td>
+                <td id ="combnodefunction"></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table id="combadjacentmatrixtableid">
+          </table>
+        </div>
+      </div>
+      
+      <p> 讯息:(Message) <span id = "combtagMessage"></span></p><br>
+    </div>
+
+
+  
+
+
+    <script type="text/javascript">
+      /*****************************************************************************************
+       * 
+       * Graph Class Definition and graph helper functions
+       * 
+       * **************************************************************************************/
+      var idgenerator = 1; // used to assign unique id to graph vertices
+
+      function getallfunctionsfromgtoh(curr,result, g,h,i){
+        if(i == h.length){
+          result.push(curr);
+          return;
+        }
+        for(let j = 0; j< g.length; j++){
+          curr[h[i]] = g[j];
+          getallfunctionsfromgtoh({...curr},result,g,h, i+1);
+        }
+      }
+      // function adapted from https://bobbyhadz.com/blog/javascript-check-if-two-sets-are-equal
+      function setsAreEqual(a, b) { 
+        if (a.size !== b.size) {
+          return false;
+        }
+        return Array.from(a).every(element => {
+          return b.has(element);
+        });
+      }
+
+      class Node {
+        constructor(label, id,color,adjacentnodeslist,fonctionasdict) {
+          this.label = label;
+          this.id = id;
+          this.color = color;
+          this.adjacentnodeslist = adjacentnodeslist;
+          this.functionasdict = fonctionasdict;
+          this.gracefullabel = -1;
+        }
+        isvadjacent(vlabel){
+          for(let i = 0; i< this.adjacentnodeslist.length ; i++){
+            if(typeof this.adjacentnodeslist[i] === 'undefined'){
+                  continue;
+            }
+            if(vlabel == this.adjacentnodeslist[i].label){
+              return true;
+            }
+          }
+          return false;
+        }
+      }
+
+      class Graph{
+        constructor(glist){
+          this.graphlist = glist;
+          this.minburnseqlen = Number.MAX_VALUE;
+          this.minburningsequence = [];
+          this.computegraphproperties();
+        }
+        computegraphproperties(){
+          this.maxdegree = this.getmaxdegree();
+          this.mindegree = this.getmindegree();
+          this.averagedegree = this.getaveragedegree();
+          this.isbasicodd = this.computeisgraphbasicoddgraph();
+          this.isbipartite = this.computeisgraphbipartite();
+          this.hasgoodpartition = this.computegraphhasgoodpartition();
+          this.adjmatrix = this.computeadjacencymatrix();
+          // compute if hamiltonian path existat staing at each node in the graph. 
+          this.hashamiltonianpath = false;
+          this.ahamiltonianpath = [];
+          for(let i = 0; i < this.graphlist.length; i++){
+            var currpath = [];
+            var visited = new Array(this.graphlist.length).fill(false);
+            var result = [];
+            var tempresult = this.computedoesgraphhashamiltonianpath(currpath, visited, this.graphlist[i],result);
+            if(tempresult){
+              this.hashamiltonianpath = tempresult;
+              var ahamiltonianpathstring = "";
+              for(let j = 0; j < result[0].length; j++){
+                ahamiltonianpathstring = ahamiltonianpathstring + result[0][j]+"-";
+              }
+              this.ahamiltonianpath = ahamiltonianpathstring;
+              break;
+            }
+          }
+          this.maxmatching = this.computemaximummatching();
+          this.iscaterpillar = this.computeisgraphcaterpillar();
+          // compute burning number
+          for(let i = 0; i< this.graphlist.length; i++){
+            // if(i<3){
+            //   continue;
+            // }
+            var theburntnodes = new Array(this.graphlist.length).fill(false);
+            theburntnodes[i] = true;
+            this.computeburningsequenceutil([i],theburntnodes);
+          }
+          // compute gracefullabelling
+          var nedges = 0
+          for(let i = 0 ; i < this.graphlist.length; i++){
+            nedges = nedges + this.graphlist[i].adjacentnodeslist.length;
+          }
+          nedges = nedges / 2;
+          var nodecolordict = {};
+          var edgecolordict = {};
+          for(let i = 0 ; i< nedges +1; i++){
+            nodecolordict[i] = 0;
+          }
+          for(let i = 1 ; i< nedges +1; i++){
+            edgecolordict[i] = 0;
+          }
+          this.hasgracefullabelling = this.computehasgracefullabelling(0, nodecolordict, edgecolordict, nedges);
+          var gracefullabelstring="";
+          for(let i = 0 ; i< this.graphlist.length; i++){
+            gracefullabelstring = gracefullabelstring+this.graphlist[i].label+":"+this.graphlist[i].gracefullabel+"|";
+          }
+          this.agracefullabel = gracefullabelstring;
+
+        }
+        computeadjacencymatrix(){
+          var tempmatrix = Array.from(Array(this.graphlist.length), () => Array(this.graphlist.length).fill(0));
+          for (let i = 0 ; i < this.graphlist.length; i++){
+            for (let j = 0 ; j < this.graphlist.length; j++){
+              if(this.graphlist[i].isvadjacent(this.graphlist[j].label)){
+                tempmatrix[i][j]=1;
+              }
+              else{
+                tempmatrix[i][j]=0;
+              }
+            }
+          }
+          return tempmatrix;
+        }
+        // computetuttematrix(){
+        //   var tempmatrix = Array.from(Array(this.graphlist.length), () => Array(this.graphlist.length).fill(0));
+        //   for (let i = 0 ; i < this.graphlist.length; i++){
+        //     for (let j = 0 ; j < this.graphlist.length; j++){
+        //       if(this.graphlist[i].isvadjacent(this.graphlist[j].label)){
+        //         tempmatrix[i][j]=1;
+        //       }
+        //       else{
+        //         tempmatrix[i][j]=0;
+        //       }
+        //     }
+        //   }
+        //   return tempmatrix;
+        // }
+        computegraphhasgoodpartition(){
+          var visited = new Array(this.graphlist.length);
+          var numberofvisited = 0;
+          for(let i = 0; i < this.graphlist.length; i++){
+            visited[i]=-1;
+          }
+          for(let i = 0; i< this.graphlist.length ; i++){
+            if(visited[i] != -1){
+              if(numberofvisited % 2 == 1){
+                return false;
+              }
+              continue;
+            }
+            var queue = [];
+            queue.push(i);
+            visited[i] = 1;
+            numberofvisited = numberofvisited+ 1;
+            while (queue.length != 0){
+              var u = queue.shift();
+              for(let j = 0; j < this.graphlist[u].adjacentnodeslist.length; j++){
+                if(typeof this.graphlist[u].adjacentnodeslist[j] === 'undefined'){
+                  continue;
+                }
+                var tempindex  = this.getnodeindexusingid(this.graphlist[u].adjacentnodeslist[j].id);
+                if(visited[tempindex] == -1){
+                  visited[tempindex] = 1;
+                  queue.push(tempindex);
+                  numberofvisited = numberofvisited +1;
+                }
+              }
+            }
+          }
+          return true;
+        }
+        computeisgraphbipartite(){
+          var nodecolor = new Array(this.graphlist.length);
+          for(let i = 0; i < this.graphlist.length; i++) {
+            nodecolor[i] = -1
+          }
+          for (let i = 0; i < this.graphlist.length; i++) {
+            if(nodecolor[i] != -1){
+              continue;
+            }
+            var queue = [];
+            nodecolor[i] = 0;
+            queue.push(i);
+
+            while(queue.length != 0){
+              var u = queue.shift();
+              if(this.graphlist[u].adjacentnodeslist.length > 1){
+                for(let j = 0; j < this.graphlist[u].adjacentnodeslist.length; j++){
+                  var tempindex  = this.getnodeindexusingid(this.graphlist[u].adjacentnodeslist[j].id);
+                  if(nodecolor[tempindex] == -1){
+                    nodecolor[tempindex] = 1- nodecolor[u]
+                    queue.push(tempindex);
+
+                  }
+                  else if(nodecolor[u] == nodecolor[tempindex]){
+                    return false;
+                  }
+                }
+              }
+            }
+          }
+          return true;
+        }
+        computeisgraphbasicoddgraph(){
+          var sumdegree = 0
+          for (let i = 0; i < this.graphlist.length; i++) {
+            if(this.graphlist[i].adjacentnodeslist.length % 2 ==0){
+              return false;
+            }
+            sumdegree =  sumdegree + this.graphlist[i].adjacentnodeslist.length;
+          }
+          if(sumdegree /2 == this.graphlist.length -1){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+        computedoesgraphhashamiltonianpath(currpath, visited, currnode,result){
+          if(currpath.length == this.graphlist.length){
+            result.push(currpath);
+            return true;
+          }
+          for(let i = 0 ; i< currnode.adjacentnodeslist.length; i++){
+            var adjnodeindex =  this.getnodeindexusingid(currnode.adjacentnodeslist[i].id);
+            if(!visited[adjnodeindex]){
+              visited[adjnodeindex] = true;
+              currpath.push(currnode.adjacentnodeslist[i].label);
+              
+              if(this.computedoesgraphhashamiltonianpath([...currpath], visited,currnode.adjacentnodeslist[i],result)){
+                return true;
+              }
+              visited[adjnodeindex] = false;
+              currpath.pop();
+            }
+          }
+          return false;
+        }
+        ispartialaugmentingpath(path,edges){
+          if(path.length == 1){
+            return true;
+          }
+          for(let i = 0; i< path.length-1 ; i++){ // for each edge in the path
+            if(i % 2 == 0){ // need to check for an munmatched edge
+              var allgood = true; // all good for current edge in the path
+              for(let k = 0 ; k< edges.length ; k++){
+                if((path[i] == edges[k][0] && path[i+1] == edges[k][1]) || (path[i] == edges[k][1] && path[i+1] == edges[k][0])){
+                  allgood = false;
+                  break;
+                }
+              }
+            }
+            else{ // need to check for a matched edge
+              var allgood = false;
+              for(let k = 0 ; k< edges.length ; k++){
+                if((path[i] == edges[k][0] && path[i+1] == edges[k][1]) || (path[i] == edges[k][1] && path[i+1] == edges[k][0])){
+                  allgood = true;
+                  break;
+                }
+              }
+            }
+            if(allgood == false){
+              return false;
+            }
+          }
+          return true;
+        }
+        findaugpathdfsutil(v, visited,anaugmentpath,edges,visitedvertices ){ //https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
+          visited[v] = true;
+          anaugmentpath.push(v);
+          var augpathlength = anaugmentpath.length;
+          var augpathlenlargerthan1 = (augpathlength > 1);
+          if(augpathlenlargerthan1){
+            var lastedgeinpathisanedge = this.graphlist[anaugmentpath[anaugmentpath.length -1]].isvadjacent(this.graphlist[anaugmentpath[anaugmentpath.length -2]].label);
+            if(!lastedgeinpathisanedge){
+              anaugmentpath.pop(v);
+              return false;
+            }
+          }
+          if(!this.ispartialaugmentingpath(anaugmentpath,edges)){
+            anaugmentpath.pop(v);
+            return false;
+          }
+          if(this.ispartialaugmentingpath(anaugmentpath,edges) && anaugmentpath.length % 2 == 0 && !visitedvertices[anaugmentpath[anaugmentpath.length -1]]){
+            return true;
+          }
+          for(let i = 0 ; i< this.graphlist[v].adjacentnodeslist.length; i++){
+            var tempindex  = this.getnodeindexusingid(this.graphlist[v].adjacentnodeslist[i].id);
+            if (!visited[tempindex]){
+              if(this.findaugpathdfsutil(tempindex, visited,anaugmentpath,edges,visitedvertices )){
+                // console.log(anaugmentpath);
+                return true;
+              }
+            }
+          }
+          return false;
+        }
+        findaugmentingpath(edges,startindex,machedvertices){
+          var anaugmentingpath = [];
+          var visitedfindaugmentingpath = new Array(this.graphlist.length).fill(false);
+
+          if(this.findaugpathdfsutil(startindex, visitedfindaugmentingpath,anaugmentingpath,edges,machedvertices)){
+            return anaugmentingpath
+          }
+          return [];
+        }
+        augmentaugmentingpath(matching,path){
+          var result = [...matching];
+          // iterate over the path
+          for(let i = 0 ; i< path.length-1 ; i++){
+            if(i % 2 == 0){
+              result.push([path[i], path[i+1]]);
+            }
+            else{
+              for(let j = 0 ; j< result.length; j++){
+                if((result[j][0] == path[i] && result[j][1] == path[i+1]) || (result[j][1] == path[i] && result[j][0] == path[i+1])){
+                  result.splice(j,1);
+                }
+              }
+            }
+          }
+          return result;
+        }
+        computeburningsequenceutil(seq,burntnodes){
+          // check return condition
+          if(burntnodes.every(value => value === true)){
+            if(seq.length < this.minburnseqlen){
+              this.minburnseqlen = seq.length;
+              var tempstr = "";
+              for(let i = 0 ; i< seq.length; i++){
+                tempstr = tempstr +this.graphlist[seq[i]].label+"-";
+              }
+              this.minburningsequence = tempstr;
+            }
+            return
+          }
+          // burt prev 
+          var newburntnodes = new Array(this.graphlist.length).fill(false);
+          for(let k = 0 ; k< burntnodes.length; k++){
+            if(burntnodes[k]){
+              newburntnodes[k] = true;
+              for(let i = 0; i< this.graphlist[k].adjacentnodeslist.length; i++){
+                var neighborindex = this.getnodeindexusingname(this.graphlist[k].adjacentnodeslist[i].label);
+                newburntnodes[neighborindex] = true;
+              }
+            }
+          }
+          // select new node
+          if(newburntnodes.every(value => value === true)){
+            seq.push(0);
+            this.computeburningsequenceutil([...seq],newburntnodes);
+            seq.pop();
+          }
+          else{
+            for(let i= 0; i< newburntnodes.length; i++){
+              if(newburntnodes[i] == false){
+                newburntnodes[i] = true;
+                seq.push(i);
+                this.computeburningsequenceutil([...seq],newburntnodes);
+                newburntnodes[i] = false;
+                seq.pop();
+              }
+            }
+          }
+        }
+        computemaximummatching(){
+          var visitedcomputemaximummatching = new Array(this.graphlist.length).fill(false); // to check if a node is in a matching
+          // label the edges
+          var matchededges = [];
+          while(true){
+            // find an unmatched node
+            var anunvisitednodeindex = -1;
+            for(let i = 0 ; i < visitedcomputemaximummatching.length; i++){
+              if(! visitedcomputemaximummatching[i]){
+                anunvisitednodeindex = i;
+                break;
+              }
+            }
+            // if all nodes are visited, found a perfect matching
+            if(anunvisitednodeindex == -1){
+              break; 
+            }
+            // find an augmenting path starting from the unvisited node
+            var anaugpath = this.findaugmentingpath(matchededges,anunvisitednodeindex,visitedcomputemaximummatching);
+            // if no augment path
+            if(anaugpath.length == 0){
+              visitedcomputemaximummatching[anunvisitednodeindex] = true;
+              continue;
+            }
+            matchededges = this.augmentaugmentingpath(matchededges,anaugpath);
+            visitedcomputemaximummatching[anaugpath[0]] = true;
+            visitedcomputemaximummatching[anaugpath[anaugpath.length -1]] = true;
+            // console.log(matchededges);
+            // console.log(visitedcomputemaximummatching);
+            // break;
+          }
+          var matchinglabesl = []
+          for(let i = 0; i < matchededges.length; i++){
+            var temps = this.graphlist[matchededges[i][0]].label;
+            var tempt = this.graphlist[matchededges[i][1]].label;
+            matchinglabesl.push("("+temps+","+tempt+")");
+          }
+          return matchinglabesl;
+        }
+        computeisgraphcaterpillar(){
+          var nedges = 0;
+          for(let i = 0 ; i< this.graphlist.length; i++){
+            nedges = nedges + this.graphlist[i].adjacentnodeslist.length;
+            if(this.graphlist[i].adjacentnodeslist.length >= 3){
+              var nofneighbordegtwoormore = 0;
+              for(let m = 0 ; m < this.graphlist[i].adjacentnodeslist.length; m++){
+                if(this.graphlist[i].adjacentnodeslist[m].adjacentnodeslist.length >= 2){
+                  nofneighbordegtwoormore = nofneighbordegtwoormore + 1;
+                }
+              }
+              if(nofneighbordegtwoormore >=3){
+                return false;
+              }
+            }
+          }
+          if(this.graphlist.length - (nedges/2) != 1){
+            return false; // not a tree
+          }
+          return true;
+        }
+        computehasgracefullabelling(currnodeindex, visitednodes, visitededges, nedges){
+          var gracefullabelstring="";
+          for(let i = 0 ; i< this.graphlist.length; i++){
+            gracefullabelstring = gracefullabelstring+this.graphlist[i].label+":"+this.graphlist[i].gracefullabel+"|";
+          }
+          console.log(gracefullabelstring);
+          console.log(visitednodes);
+          console.log(visitededges);
+
+          if(currnodeindex == this.graphlist.length){
+            // console.log(glabels);
+            return true;
+          }
+          var neighborindices = [];
+          for(let i = 0; i< nedges+1; i++){// iterate over possible colors for vertices
+            neighborindices = [];
+            var doubleedgecreatingdic ={};// we also need to check when adding a node create two same edge label simultanously.
+            for(let m = 1 ; m < nedges+1; m++){
+              doubleedgecreatingdic[m] = 0;
+            }
+            if(visitednodes[i] == 0){ // if color i is not used on any vertex
+              var edgelabelok = true; // check if can label node so that adjacent edge label is compatible
+              for(let m = 0 ; m < this.graphlist[currnodeindex].adjacentnodeslist.length; m++){
+                var neighbornodeindex = this.getnodeindexusingname(this.graphlist[currnodeindex].adjacentnodeslist[m].label);
+                if(this.graphlist[neighbornodeindex].gracefullabel != -1){ // if neighbor node has been labeld then we check for the corresponding edge label
+                  neighborindices.push(neighbornodeindex)
+                  if(visitededges[Math.abs(this.graphlist[neighbornodeindex].gracefullabel - i)] != 0){// if compatible with edge coloring
+                    edgelabelok  = false;
+                    break;
+                  }
+                  if(doubleedgecreatingdic[Math.abs(this.graphlist[neighbornodeindex].gracefullabel - i)] !=0){
+                    edgelabelok  = false;
+                    break;
+                  }
+                  doubleedgecreatingdic[Math.abs(this.graphlist[neighbornodeindex].gracefullabel - i)] = 1;
+                }
+              }
+              if(edgelabelok){
+                this.graphlist[currnodeindex].gracefullabel = i;
+                visitednodes[i] = visitednodes[i]+1;
+                for(let m=0; m< neighborindices.length; m++){
+                  visitededges[Math.abs(this.graphlist[neighborindices[m]].gracefullabel - i)] = 1;
+                }
+                if(this.computehasgracefullabelling(currnodeindex+1, {...visitednodes}, {...visitededges}, nedges)){
+                  return true;
+                }
+                for(let m=0; m< neighborindices.length; m++){
+                  visitededges[Math.abs(this.graphlist[neighborindices[m]].gracefullabel - i)] = 0;
+                }
+                visitednodes[i] = visitednodes[i]-1;
+                this.graphlist[currnodeindex].gracefullabel = -1;
+              }
+            }
+          }
+          return false;
+        }
+        getmaxdegree(){
+          var maxd = 0;        
+          for (let i = 0; i < this.graphlist.length; i++) {
+            if(this.graphlist[i].adjacentnodeslist.length > maxd){
+              maxd = this.graphlist[i].adjacentnodeslist.length;
+            }
+          } 
+          return maxd;
+        }
+        getmindegree(){
+          var mind = 100000;        
+          for (let i = 0; i < this.graphlist.length; i++) {
+            if(this.graphlist[i].adjacentnodeslist.length < mind){
+              mind = this.graphlist[i].adjacentnodeslist.length;
+            }
+          } 
+          return mind;
+        }
+        getaveragedegree(){
+          var degreesum = 0.0 
+          for (let i = 0; i < this.graphlist.length; i++) {
+            degreesum = degreesum + this.graphlist[i].adjacentnodeslist.length;
+          } 
+          return degreesum / this.graphlist.length;
+        }
+        getnodeusingname(nodename){
+          for (let i = 0; i < this.graphlist.length; i++) {
+            if(this.graphlist[i].label == nodename){
+              return this.graphlist[i];
+            }
+          } 
+          return null;
+        }
+        getnodeusingid(nodeid){
+          for (let i = 0; i < this.graphlist.length; i++) {
+            if(this.graphlist[i].id == nodeid){
+              return this.graphlist[i];
+            }
+          } 
+          return null;
+        }
+        getnodeindexusingid(nodeid){
+          for (let i = 0; i < this.graphlist.length; i++) {
+            if(this.graphlist[i].id == nodeid){
+              return i;
+            }
+          } 
+          return -1;
+        }
+        getnodeindexusingname(nodename){
+          for (let i = 0; i < this.graphlist.length; i++) {
+            if(this.graphlist[i].label == nodename){
+              return i;
+            }
+          } 
+          return -1;
+        }
+        getnodenameusingid(nodeid){
+          for (let i = 0; i < this.graphlist.length; i++) {
+            if(this.graphlist[i].id == nodeid){
+              return this.graphlist[i].label;
+            }
+          } 
+          return "";
+        }
+        getcomplementgraph(){
+          var tempgraph = new Graph([]);
+          for(let i = 0; i< this.graphlist.length ; i++){
+            var tempnode = new Node(this.graphlist[i].label, idgenerator,null,[],{});
+            idgenerator = idgenerator +1;
+            tempgraph.graphlist.push(tempnode);
+          }
+          for(let i = 0; i< this.graphlist.length ; i++){
+            for(let j = 0; j< this.graphlist.length; j++){
+              // check if edge is present
+              var edgepresent = false;
+              for(let k = 0; k< this.graphlist[i].adjacentnodeslist.length; k++){
+                if(this.graphlist[i].adjacentnodeslist[k].label == this.graphlist[j].label){
+                  edgepresent = true;
+                }
+              }
+              if(!edgepresent && i != j){
+                tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[j]);
+              }
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        getlinegraph(){
+          var tempgraph = new Graph([]);
+          for(let i = 0 ; i< this.graphlist.length; i++){ // iterate over all nodes in graph
+            // add vertices
+            for(let j = 0; j< this.graphlist[i].adjacentnodeslist.length; j++){
+              var nodeexist = tempgraph.getnodeusingname(this.graphlist[i].label+","+this.graphlist[i].adjacentnodeslist[j].label);
+              var nodeexistreversed = tempgraph.getnodeusingname(this.graphlist[i].adjacentnodeslist[j].label+","+this.graphlist[i].label);
+              // if node not added
+              if(nodeexist == null && nodeexistreversed == null){
+                var tempnode = new Node(this.graphlist[i].label+","+this.graphlist[i].adjacentnodeslist[j].label,idgenerator,null,[],{});
+                idgenerator = idgenerator + 1;
+                tempgraph.graphlist.push(tempnode);
+              }
+            }
+            // add edges
+            for(let j = 0; j< this.graphlist[i].adjacentnodeslist.length-1; j++){
+              var nodeexist = tempgraph.getnodeusingname(this.graphlist[i].label+","+this.graphlist[i].adjacentnodeslist[j].label);
+              var nodeexistreversed = tempgraph.getnodeusingname(this.graphlist[i].adjacentnodeslist[j].label+","+this.graphlist[i].label);
+              for(let k =j+1; k< this.graphlist[i].adjacentnodeslist.length; k++){
+                var node2exist = tempgraph.getnodeusingname(this.graphlist[i].label+","+this.graphlist[i].adjacentnodeslist[k].label);
+                var node2existreversed = tempgraph.getnodeusingname(this.graphlist[i].adjacentnodeslist[k].label+","+this.graphlist[i].label);
+                if(nodeexist != null){
+                  if(node2exist != null){
+                    tempgraph.addedgetoself(nodeexist.label,node2exist.label);
+                  }
+                  else{
+                    tempgraph.addedgetoself(nodeexist.label,node2existreversed.label);
+                  }
+                }
+                else{
+                  if(node2exist != null){
+                    tempgraph.addedgetoself(nodeexistreversed.label,node2exist.label);
+                  }
+                  else{
+                    tempgraph.addedgetoself(nodeexistreversed.label,node2existreversed.label);
+                  }
+                }
+              }
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        getexponentialgraph(graphh){
+          var tempgraph = new Graph([]);
+          var allposiblefunctions = [];
+          var currftion = {};
+          var gg =[];
+          var hh = [];
+          // create all functions
+          for(let i = 0; i < graphh.graphlist.length ; i++){
+            hh.push(graphh.graphlist[i].label);
+          }
+          for(let i = 0; i < this.graphlist.length ; i++){
+            gg.push(this.graphlist[i].label);
+          }
+          //generate all nodes
+          getallfunctionsfromgtoh(currftion,allposiblefunctions, gg,hh,0);
+          for(let i = 0; i < allposiblefunctions.length ; i++){
+            var tempnode = new Node(i+"", idgenerator, null, [], allposiblefunctions[i]);
+            idgenerator++;
+            tempgraph.graphlist.push(tempnode);
+          }
+          // generate all edges
+          for(let i = 0; i< tempgraph.graphlist.length; i++){
+            for(let j = i ; j< tempgraph.graphlist.length; j++){
+              // check if there is edge between node i and node j
+              var canhaveedge = true;
+              //(u,v) in G^H if (u(x),v(y)) in E(G) for all (x,y) in V(H)
+              for(let k = 0; k< graphh.graphlist.length; k++){
+                if(!canhaveedge){
+                  break;
+                }
+                for(let m = 0; m < graphh.graphlist[k].adjacentnodeslist.length ; m++){
+                  var uofx = tempgraph.graphlist[i].functionasdict[graphh.graphlist[k].label];
+                  var vofy = tempgraph.graphlist[j].functionasdict[graphh.graphlist[k].adjacentnodeslist[m].label];
+                  // reverse
+                  var uofy = tempgraph.graphlist[i].functionasdict[graphh.graphlist[k].adjacentnodeslist[m].label];
+                  var vofx = tempgraph.graphlist[j].functionasdict[graphh.graphlist[k].label];
+                  var haveedge = false;
+                  // check if edge (u(x),v(y)) in G or (u(y),v(x)) in g , if not can not have edge
+                  //todo 
+                  for (let n = 0; n < this.getnodeusingname(uofx).adjacentnodeslist.length ; n++){
+                    if(this.getnodeusingname(uofx).adjacentnodeslist[n].label == vofy){
+                      haveedge = true;
+                    }
+                  }
+                  for (let n = 0; n < this.getnodeusingname(uofy).adjacentnodeslist.length ; n++){
+                    if(this.getnodeusingname(uofy).adjacentnodeslist[n].label == vofx){
+                      haveedge = true;
+                    }
+                  }
+                  if(!haveedge){
+                    canhaveedge = false;
+                  }
+                }
+              }
+              if(canhaveedge){
+                // add edge
+                tempgraph.graphlist[i].adjacentnodeslist.push( tempgraph.graphlist[j]);
+                tempgraph.graphlist[j].adjacentnodeslist.push( tempgraph.graphlist[i]);
+              }
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        getcategoricalproductgraph(graphh){
+          var tempgraph = new Graph([]);
+          for(let i = 0; i < this.graphlist.length; i++){
+            for(let j = 0; j < graphh.graphlist.length; j++){
+              var tempnode = new Node(this.graphlist[i].label+","+graphh.graphlist[j].label, idgenerator, null, [],{});
+              tempgraph.graphlist.push(tempnode);
+              idgenerator = idgenerator + 1;
+            }
+          }
+          //((u,v),(x,y)) in GxH if (u,x) in G and (v,y) in H
+          for(let i = 0; i< tempgraph.graphlist.length-1; i++){
+            for(let j = i+1; j < tempgraph.graphlist.length; j++){
+              console.log(tempgraph.graphlist[i].label.split(",")[0]);
+              var nodeu = this.getnodeusingname(tempgraph.graphlist[i].label.split(",")[0]);
+              var nodex = this.getnodeusingname(tempgraph.graphlist[j].label.split(",")[0]);
+              var nodev = graphh.getnodeusingname(tempgraph.graphlist[i].label.split(",")[1]);
+              var nodey = graphh.getnodeusingname(tempgraph.graphlist[j].label.split(",")[1]);
+              if(nodeu.isvadjacent(nodex.label) && nodev.isvadjacent(nodey.label)){
+                tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[j]);
+                tempgraph.graphlist[j].adjacentnodeslist.push(tempgraph.graphlist[i]);
+              }
+              // console.log(tempgraph.graphlist[i].label.split(","));
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        getcartesianproductgraph(graphh){
+          var tempgraph = new Graph([]);
+          for(let i = 0; i < this.graphlist.length; i++){
+            for(let j = 0; j < graphh.graphlist.length; j++){
+              var tempnode = new Node(this.graphlist[i].label+","+graphh.graphlist[j].label, idgenerator, null,[],{});
+              idgenerator = idgenerator +1;
+              tempgraph.graphlist.push(tempnode);
+            }
+          }
+          //((u,v),(x,y)) in GxH if (u,x) in G and (v,y) in H
+          for(let i = 0; i< tempgraph.graphlist.length-1; i++){
+            for(let j = i+1; j < tempgraph.graphlist.length; j++){
+              console.log(tempgraph.graphlist[i].label.split(",")[0]);
+              var nodeu = this.getnodeusingname(tempgraph.graphlist[i].label.split(",")[0]);
+              var nodex = this.getnodeusingname(tempgraph.graphlist[j].label.split(",")[0]);
+              var nodev = graphh.getnodeusingname(tempgraph.graphlist[i].label.split(",")[1]);
+              var nodey = graphh.getnodeusingname(tempgraph.graphlist[j].label.split(",")[1]);
+              if((nodeu.isvadjacent(nodex.label) && nodev.label == nodey.label) || (nodev.isvadjacent(nodey.label) && nodeu.label == nodex.label)){
+                tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[j]);
+                tempgraph.graphlist[j].adjacentnodeslist.push(tempgraph.graphlist[i]);
+              }
+              // console.log(tempgraph.graphlist[i].label.split(","));
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        getstrongproductgraph(graphh){
+          var tempgraph = new Graph([]);
+          for(let i = 0; i < this.graphlist.length; i++){
+            for(let j = 0; j < graphh.graphlist.length; j++){
+              var tempnodee = new Node(this.graphlist[i].label+","+graphh.graphlist[j].label, idgenerator,null, [] , {});
+              idgenerator = idgenerator + 1;
+              tempgraph.graphlist.push(tempnodee);
+            }
+          }
+          //((u,v),(x,y)) in GxH if (u,x) in G and (v,y) in H
+          for(let i = 0; i< tempgraph.graphlist.length-1; i++){
+            for(let j = i+1; j < tempgraph.graphlist.length; j++){
+              console.log(tempgraph.graphlist[i].label.split(",")[0]);
+              var nodeu = this.getnodeusingname(tempgraph.graphlist[i].label.split(",")[0]);
+              var nodex = this.getnodeusingname(tempgraph.graphlist[j].label.split(",")[0]);
+              var nodev = graphh.getnodeusingname(tempgraph.graphlist[i].label.split(",")[1]);
+              var nodey = graphh.getnodeusingname(tempgraph.graphlist[j].label.split(",")[1]);
+              if((nodeu.isvadjacent(nodex.label) && nodev.label == nodey.label) || (nodev.isvadjacent(nodey.label) && nodeu.label == nodex.label) || (nodeu.isvadjacent(nodex.label) && nodev.isvadjacent(nodey.label))){
+                tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[j]);
+                tempgraph.graphlist[j].adjacentnodeslist.push(tempgraph.graphlist[i]);
+              }
+              // console.log(tempgraph.graphlist[i].label.split(","));
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        /*
+        *
+        */
+        addvertextograph(vertexname){
+          var tempgraph = this.makeaselfcopy();
+          // console.log(tempgraph);
+          var nodeingraph = tempgraph.getnodeusingname(vertexname);
+          if(nodeingraph == null){
+            var tempNode = new Node(vertexname, idgenerator, null,[],{});
+            tempgraph.graphlist.push(tempNode);
+            idgenerator = idgenerator +1;
+            tempgraph.computegraphproperties();
+            return [tempgraph,tempNode];
+          }
+          return [tempgraph,nodeingraph];
+          // history proof
+        }
+        addedgetoself(slabel,dlabel){
+          var srcingraph = this.getnodeusingname(slabel);
+          var destingraph = this.getnodeusingname(dlabel);
+
+          // updating the nodesArray
+          if(srcingraph === null && destingraph === null){ // if both node are not present in graph create both
+            console.log("null null");
+            var tempnode1 = new Node(slabel, idgenerator, null, [],{});
+            idgenerator = idgenerator +1;
+            var tempnode2 = new Node(dlabel, idgenerator, null, [],{});
+            idgenerator = idgenerator +1;
+            tempnode2.adjacentnodeslist.push(tempnode1);
+            tempnode1.adjacentnodeslist.push(tempnode2);
+            this.graphlist.push(tempnode1);
+            this.graphlist.push(tempnode2);
+          }
+          else if(srcingraph === null){
+            console.log("no null null");
+            var tempnode1 = new Node(slabel, idgenerator, null,[destingraph],{});
+            idgenerator = idgenerator +1;
+            destingraph.adjacentnodeslist.push(tempnode1);
+            this.graphlist.push(tempnode1);
+          }
+          else if(destingraph === null){
+            console.log("null nonull");
+            var tempnode1 = new Node(dlabel, idgenerator, null,[srcingraph],{});
+            idgenerator = idgenerator +1;
+            srcingraph.adjacentnodeslist.push(tempnode1);
+            this.graphlist.push(tempnode1);
+          }
+          else{
+            console.log("nonull null");
+            // check if edge already present
+            for(let i = 0; i< srcingraph.adjacentnodeslist.length; i++){
+              if(srcingraph.adjacentnodeslist[i].label == destingraph.label){
+                return false;
+              }
+            }
+            srcingraph.adjacentnodeslist.push(destingraph);
+            destingraph.adjacentnodeslist.push(srcingraph);
+          }
+        }
+        addedgetograph(slabel, dlabel){
+          // check if the nodes is already in graph
+          var tempgraph = this.makeaselfcopy();
+          tempgraph.addedgetoself(slabel,dlabel)
+          tempgraph.computegraphproperties();
+          return tempgraph;
+          // historyproof
+        }
+        deletevertexbyid(nodeid){
+          var tempgraph = this.makeaselfcopy();
+          var nodeindex = -1;
+          var nodelabel = "";
+          for(let i =0; i< this.graphlist.length; i++){
+            if(this.graphlist[i].id == nodeid){
+              nodelabel = this.graphlist[i].label;
+              nodeindex = tempgraph.getnodeindexusingname(nodelabel);
+              break;
+            }
+          }
+          for(let i = 0; i< tempgraph.graphlist[nodeindex].adjacentnodeslist.length; i++){
+            for(let j = 0; j < tempgraph.graphlist[nodeindex].adjacentnodeslist.length; j++){
+              if(tempgraph.graphlist[nodeindex].adjacentnodeslist[i].adjacentnodeslist[j].label == nodelabel){
+                tempgraph.graphlist[nodeindex].adjacentnodeslist[i].adjacentnodeslist.splice(j,1);
+                break;
+              }
+            }
+          }
+          tempgraph.graphlist.splice(nodeindex,1);
+          tempgraph.computegraphproperties();
+          console.log(tempgraph);
+          return tempgraph;
+          //history proof
+        }
+        deleteedgebyfromtoids(fromid, toid){
+          var tempgraph = this.makeaselfcopy();
+          var fromindex = -1;
+          var toindex = -1;
+
+          for(let i =0; i< this.graphlist.length; i++){
+            if(this.graphlist[i].id == fromid){
+              fromindex = i;
+            }
+            if(this.graphlist[i].id == toid){
+              toindex = i;
+            }
+            if(fromindex != -1 && toindex != -1){
+              break;
+            }
+          }
+          for(let i = 0; i< tempgraph.graphlist[fromindex].adjacentnodeslist.length ; i++){
+            if(tempgraph.graphlist[fromindex].adjacentnodeslist[i].label == tempgraph.graphlist[toindex].label){
+              tempgraph.graphlist[fromindex].adjacentnodeslist.splice(i,1);
+              break;
+            }
+          }
+          for(let i = 0; i< tempgraph.graphlist[toindex].adjacentnodeslist.length ; i++){
+            if(tempgraph.graphlist[toindex].adjacentnodeslist[i].label == tempgraph.graphlist[fromindex].label){
+              tempgraph.graphlist[toindex].adjacentnodeslist.splice(i,1);
+              break;
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+          // history proof
+        }
+        resetthegraph(){
+          this.graphlist = []
+          this.computegraphproperties();
+          //history proof
+        }
+        subdivideedgebyfromtoids(fromid, toid){
+          //Code to check fromid and to id form an edge
+          //pass
+          //get index of node from the node ids
+          var tempgraph = this.makeaselfcopy();
+          var fromindex = this.getnodeindexusingid(fromid);
+          var toindex = this.getnodeindexusingid(toid);
+          var fromlabel = this.graphlist[fromindex].label;
+          var tolabel = this.graphlist[toindex].label;
+          //generate new label for new node
+          var templabel = tempgraph.graphlist.length;
+          while(tempgraph.getnodeusingname(templabel+"") != null){
+            templabel = templabel + 1;
+          }
+          //create new node
+          var newnode = new Node(templabel +"", idgenerator, null, [],{});
+          idgenerator = idgenerator + 1;
+          tempgraph.graphlist.push(newnode);
+          //delete edge
+          for(let i = 0 ; i < tempgraph.graphlist[fromindex].adjacentnodeslist.length; i++){
+            if(tempgraph.graphlist[fromindex].adjacentnodeslist[i].label == tolabel){
+              tempgraph.graphlist[fromindex].adjacentnodeslist.splice(i,1);
+              tempgraph.graphlist[fromindex].adjacentnodeslist.push(newnode);
+              break;
+            }
+          }
+          for(let i = 0 ; i < tempgraph.graphlist[toindex].adjacentnodeslist.length; i++){
+            if(tempgraph.graphlist[toindex].adjacentnodeslist[i].label == fromlabel){
+              tempgraph.graphlist[toindex].adjacentnodeslist.splice(i,1);
+              tempgraph.graphlist[toindex].adjacentnodeslist.push(newnode);
+              break;
+            }
+          }
+          newnode.adjacentnodeslist.push(tempgraph.graphlist[fromindex]);
+          newnode.adjacentnodeslist.push(tempgraph.graphlist[toindex]);
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        contractedgebyfromtoids(fromid, toid){
+          // code to check if from and to ids form an edge
+          // pass
+          var tempgraph = this.makeaselfcopy();
+          var fromindex = this.getnodeindexusingid(fromid);
+          var toindex = this.getnodeindexusingid(toid);
+          var fromlabel = tempgraph.graphlist[fromindex].label;
+          var tolabel = tempgraph.graphlist[toindex].label;
+          var newlabel = fromlabel +","+ tolabel;
+          var newnode = new Node(newlabel, idgenerator, null, [], {});
+          idgenerator++;
+          tempgraph.graphlist.push(newnode);
+
+          for (let i = 0 ; i < tempgraph.graphlist[fromindex].adjacentnodeslist.length; i++){
+            if(tempgraph.graphlist[fromindex].adjacentnodeslist[i].label != tolabel){ // avoid self loop
+              tempgraph.graphlist[fromindex].adjacentnodeslist[i].adjacentnodeslist.push(newnode);
+              newnode.adjacentnodeslist.push(tempgraph.graphlist[fromindex].adjacentnodeslist[i]);
+              // remove the edges from 
+              var fromnodeindexinadjlist = -1;
+              for(let t = 0 ; t < tempgraph.graphlist[fromindex].adjacentnodeslist[i].adjacentnodeslist.length; t++){
+                if(tempgraph.graphlist[fromindex].adjacentnodeslist[i].adjacentnodeslist[t].label == fromlabel){
+                  fromnodeindexinadjlist = t;
+                  break;
+                }
+              }
+              tempgraph.graphlist[fromindex].adjacentnodeslist[i].adjacentnodeslist.splice(fromnodeindexinadjlist,1);
+            }
+          }
+          for (let i = 0 ; i < tempgraph.graphlist[toindex].adjacentnodeslist.length; i++){
+            if(tempgraph.graphlist[toindex].adjacentnodeslist[i].label !=  fromlabel){
+              tempgraph.graphlist[toindex].adjacentnodeslist[i].adjacentnodeslist.push(newnode);
+              newnode.adjacentnodeslist.push(tempgraph.graphlist[toindex].adjacentnodeslist[i]);
+              var tonodeindexinadjlist = -1;
+              for(let t = 0 ; t < tempgraph.graphlist[toindex].adjacentnodeslist[i].adjacentnodeslist.length; t++){
+                if(tempgraph.graphlist[toindex].adjacentnodeslist[i].adjacentnodeslist[t].label == tolabel){
+                  tonodeindexinadjlist = t;
+                  break;
+                }
+              }
+              tempgraph.graphlist[toindex].adjacentnodeslist[i].adjacentnodeslist.splice(tonodeindexinadjlist,1);
+            }
+          }
+          fromindex = tempgraph.getnodeindexusingname(fromlabel);
+          tempgraph.graphlist.splice(fromindex,1);
+          toindex = tempgraph.getnodeindexusingname(tolabel);
+          tempgraph.graphlist.splice(toindex,1);
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+
+        becomecompletegraph(nnode){
+          var tempgraph = new Graph([]);
+          for (let i = 0; i < nnode; i++) {
+            var tempnode = new Node(i+"", idgenerator, null,[],{});
+            idgenerator = idgenerator + 1; 
+            tempgraph.graphlist.push(tempnode);
+          }
+          for (let i = 0; i < nnode; i++) {
+            for (let j = 0; j < nnode; j++){
+              if (j != i){
+                tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[j]);
+              }
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        becomepathgraph(nnode){
+          var tempgraph = new Graph([]);
+          for (let i = 0; i < nnode; i++) {
+            var tempnode = new Node(i+"", idgenerator, null,[],{});
+            idgenerator = idgenerator + 1; 
+            tempgraph.graphlist.push(tempnode);
+          }
+          for (let i = 0; i < nnode-1; i++) {
+            tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[i+1]);
+            tempgraph.graphlist[i+1].adjacentnodeslist.push(tempgraph.graphlist[i]);
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        becomestargraph(nnode){
+          var tempgraph = new Graph([]);
+          for (let i = 0; i < nnode; i++) {
+            var tempnode = new Node(i+"", idgenerator, null,[],{});
+            idgenerator = idgenerator + 1; 
+            tempgraph.graphlist.push(tempnode);
+          }
+          for (let i = 1; i < nnode; i++) {
+            tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[0]);
+            tempgraph.graphlist[0].adjacentnodeslist.push(tempgraph.graphlist[i]);
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        becometurangraph(nnode, nparts){
+          var nmodr = nnode % nparts;
+          var nbyr = Math.floor(nnode/nparts);
+          var tempgraph = new Graph([]);
+          // create nodes
+          for (let i = 0; i < nnode; i++) {
+            var tempnode = new Node(i+"", idgenerator, null,[],{});
+            idgenerator = idgenerator + 1; 
+            tempgraph.graphlist.push(tempnode);
+          }
+          // create edges
+          for (let i = 0; i < nnode; i++) {
+            for (let j = 0; j < nnode; j++){
+              if(i < nmodr*(nbyr+1)){ // in parts with larger number of nodes
+                if(Math.floor(j/(nbyr+1)) != Math.floor(i/(nbyr+1))){
+                  tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[j]);
+                }
+              }
+              else{
+                if( Math.floor((i-(nmodr*(nbyr+1)))/nbyr) != Math.floor((j-(nmodr*(nbyr+1)))/nbyr)){
+                  tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[j]);
+                }
+              }
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        becomecompletebipartitegraph(nnodea, nnodeb){
+          var tempgraph = new Graph([]);
+          var sumofnode = nnodea + nnodeb ; 
+          // create nodes
+          for (let i = 0; i < sumofnode; i++) {
+            var tempnode = new Node(i+"", idgenerator, null,[],{});
+            idgenerator = idgenerator + 1; 
+            tempgraph.graphlist.push(tempnode);
+          }
+          // create edges
+          for (let i = 0; i < sumofnode; i++) {
+            for (let j = i; j < sumofnode; j++){
+              if((i<nnodea && j>=nnodea) || (i>=nnodea && j<nnodea)){
+                tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[j]);
+                tempgraph.graphlist[j].adjacentnodeslist.push(tempgraph.graphlist[i]);
+              }
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        becomegridgraph(nr, nc){
+          var tempgraph = new Graph([]);
+          var nnode = nr*nc ; 
+          // create nodes
+          for (let i = 0; i < nnode; i++) {
+            var tempnode = new Node(i+"", idgenerator, null,[],{});
+            idgenerator = idgenerator + 1; 
+            tempgraph.graphlist.push(tempnode);
+          }
+          // create edges
+          for(let i = 0; i<nnode;i++){
+            if(i-1 >= 0 && (i-1)%nc != nc-1){
+              tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[i-1]);
+            }
+            if(i+1 < nnode && ((i+1) % nc !=0)){
+              tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[i+1]);
+            }
+            if(i+nc < nnode){
+              tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[i+nc]);
+            }
+            if(i-nc >= 0 ){
+              tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[i-nc]);
+            }
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        becomecyclicgraph(nnode){
+          var tempgraph = new Graph([]);
+          // create nodes
+          for (let i = 0; i < nnode; i++) {
+            var tempnode = new Node(i+"", idgenerator, null,[],{});
+            idgenerator = idgenerator + 1; 
+            tempgraph.graphlist.push(tempnode);
+          }
+          for(let i = 0; i< nnode; i++){
+            tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[(i+nnode+1)%nnode]);
+            tempgraph.graphlist[i].adjacentnodeslist.push(tempgraph.graphlist[(i+nnode-1)%nnode]);
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph
+        }
+        becomerandomtree(nnode){
+          var tempgraph = new Graph([]);
+          // if less than 3 nodes
+          if(nnode <= 2){
+            tempgraph = this.becomepathgraph(nnode);
+            tempgraph.computegraphproperties();
+            return tempgraph
+          }
+          else{
+            for (let i = 0; i < nnode; i++) {
+              var tempnode = new Node(i+"", idgenerator, null,[],{});
+              idgenerator = idgenerator + 1; 
+              tempgraph.graphlist.push(tempnode);
+            }
+            var pufersequence = new Array(nnode - 2);
+            for(let i = 0; i < nnode-2; i++){
+              pufersequence[i] = Math.floor((Math.random() * nnode));;
+            }
+            var degreearray = new Array(nnode);
+            for(let i = 0 ; i< nnode; i++){
+              degreearray[i] = 1;
+            }
+            for(let i = 0; i< pufersequence.length ; i++){
+              degreearray[pufersequence[i]] = degreearray[pufersequence[i]] + 1;
+            }
+            for (let i = 0; i < pufersequence.length; i++) {
+              var tempnode = -1;
+              for(let j = 0; j< nnode; j++){
+                if(degreearray[j] == 1){
+                  tempnode = j;
+                  break;
+                }
+              }
+              tempgraph.graphlist[pufersequence[i]].adjacentnodeslist.push(tempgraph.graphlist[tempnode]);
+              tempgraph.graphlist[tempnode].adjacentnodeslist.push(tempgraph.graphlist[pufersequence[i]]);
+              degreearray[pufersequence[i]] = degreearray[pufersequence[i]] - 1;
+              degreearray[tempnode] = degreearray[tempnode] - 1;
+            }
+            console.log(degreearray);
+            var temp1 = -1;
+            var temp2 = -1;
+            for(let i = 0; i< degreearray.length; i++){
+              if(degreearray[i] == 1 && temp1 == -1){
+                temp1 = i;
+              }
+              else if(degreearray[i] == 1){
+                temp2 = i;
+              }
+              if(temp1 != -1 && temp2 != -1){
+                break;
+              }
+            }
+            console.log(temp1);
+            tempgraph.graphlist[temp1].adjacentnodeslist.push(tempgraph.graphlist[temp2]);
+            tempgraph.graphlist[temp2].adjacentnodeslist.push(tempgraph.graphlist[temp1]);
+          }
+          tempgraph.computegraphproperties();
+          return tempgraph;
+        }
+        becomecaterpillartree(nnode){
+          while(true){
+            var tempgraph = this.becomerandomtree(nnode);
+            if(tempgraph.iscaterpillar == true){
+              return tempgraph;
+            }
+          }
+        }
+        
+        makeaselfcopy(){
+          var tempgraphmakeaselfcopy = new Graph([]);
+          for(let i = 0 ; i< this.graphlist.length; i++){
+            var tempnodemakeaselfcopy = new Node(this.graphlist[i].label, idgenerator, null, [], {});
+            idgenerator = idgenerator + 1;
+            tempgraphmakeaselfcopy.graphlist.push(tempnodemakeaselfcopy);
+          }
+          for(let i = 0 ; i< this.graphlist.length; i++){
+            for(let j = 0 ; j < this.graphlist[i].adjacentnodeslist.length; j++){
+              tempgraphmakeaselfcopy.graphlist[i].adjacentnodeslist.push(tempgraphmakeaselfcopy.graphlist[tempgraphmakeaselfcopy.getnodeindexusingname(this.graphlist[i].adjacentnodeslist[j].label)]);
+            }
+          }
+          tempgraphmakeaselfcopy.computegraphproperties();
+          return tempgraphmakeaselfcopy;
+        }
+      }
+
+      // testing case
+      // ggg = []
+      // for (let i = 0; i < 3; i++){
+      //   var tempn = new Node(i, i, null, []);
+      //   ggg.push(tempn);
+      // }        
+      // for (let i = 0; i < 3; i++) {
+      //   for (let j = 0; j < 3; j++){
+      //     if (j != i && i!=0){
+      //       ggg[i].adjacentnodeslist.push(ggg[j]);
+      //     }
+      //   }
+      // }
+      // gg = new Graph(ggg)
+      // console.log(gg.averagedegree);
+
+
+      /*****************************************************************************************
+       * 
+       * Global methods
+       * 
+       * **************************************************************************************/
+      var graphstructurelist = [];
+      graphstructurelist.push(new Graph([]));
+      var currentgraphstructureindex = 0;
+      var graphstructureselectednodeid; // selected node's id in graph 1
+      var graphstructureselectededgefromid; 
+      var graphstructureselectededgetoid;
+
+      var n2graphstructurelist = [];
+      n2graphstructurelist.push(new Graph([]));
+      var n2currentgraphstructureindex = 0;
+      var n2graphstructureselectednodeid; // selected node's id in graph 1
+      var n2graphstructureselectededgefromid; 
+      var n2graphstructureselectededgetoid;
+
+      var combgraphstructurelist = [];
+      combgraphstructurelist.push(new Graph([]));
+      var combcurrentgraphstructureindex = 0;
+      var combgraphstructure = new Graph([]);
+      var combgraphstructureselectednodeid; // selected node's id in graph 1
+      var combgraphstructureselectededgefromid; 
+      var combgraphstructureselectededgetoid;
+
+      function clearTable(idstr){
+        var table = document.getElementById(idstr);
+        while(table.rows.length > 0) {
+          table.deleteRow(0);
+        }
+      }
+      function createTitleRow(str){
+        var titleRow = document.createElement("tr");
+        var titleCellTextNode = document.createTextNode(str);
+        titleRow.appendChild(titleCellTextNode);
+        return titleRow;
+      }
+      function makecell(str){
+        var nameCell = document.createElement("td");
+        var nameCellTextNode = document.createTextNode(str);
+        nameCell.appendChild(nameCellTextNode);
+        return nameCell;
+      }
+
+
+
+      function startNetwork() {
+        //create network1
+        nodes = new vis.DataSet([]);
+        edges = new vis.DataSet([]);
+        
+        var container = document.getElementById("mynetwork");
+        var data = {
+          nodes: nodes,
+          edges: edges,
+        };
+        var options = {};
+        network = new vis.Network(container, data, options);
+
+        // create network 2
+        n2nodes = new vis.DataSet([]);
+        n2edges = new vis.DataSet([]);
+        var n2container = document.getElementById("n2mynetwork");
+        var n2data = {
+          nodes: n2nodes,
+          edges: n2edges,
+        };
+        var n2options = {};
+        n2network = new vis.Network(n2container, n2data, n2options);
+      }
+
+      function updateGraph(canvasname, thegraph){
+        // update graph object with new node list
+        // update the nodes
+        var tempnodes = []
+        for (let i = 0; i < thegraph.graphlist.length; i++) {
+          tempnodes.push({id: thegraph.graphlist[i].id, label: thegraph.graphlist[i].label})
+        } 
+        //update the edges
+        var tempedges = []
+        for (let i = 0; i < thegraph.graphlist.length; i++) {
+          for (let j = 0; j < thegraph.graphlist[i].adjacentnodeslist.length; j++){
+            tempedge = {from: thegraph.graphlist[i].id, to: thegraph.graphlist[i].adjacentnodeslist[j].id}
+            var hasoppositeedge = false;
+            var hasedge = false;
+            for (let k = 0; k < tempedges.length; k++){
+              if (JSON.stringify({from: thegraph.graphlist[i].adjacentnodeslist[j].id, to: thegraph.graphlist[i].id }) === JSON.stringify(tempedges[k])){
+                hasoppositeedge = true;
+              }
+              if (JSON.stringify(tempedge) === JSON.stringify(tempedges[k])){
+                hasedge = true;
+              }
+            }
+            if (!hasoppositeedge && !hasedge){
+              tempedges.push(tempedge);
+            }
+          }
+        } 
+        console.log(tempedges);
+
+        // create the network in vis network
+        if(canvasname == "mynetwork"){
+          nodes = new vis.DataSet(tempnodes);
+          edges = new vis.DataSet(tempedges);
+          var container = document.getElementById(canvasname);
+          var data = {
+            nodes: nodes,
+            edges: edges,
+          };
+          var options = {
+            nodes: {
+              chosen: {
+                node: function(values, id, selected, hovering) {
+                  var degreemessage = thegraph.getnodeusingid(id).adjacentnodeslist.length+"";
+                  document.getElementById("degofvertex").innerHTML= degreemessage;
+                  document.getElementById("selectedvertexlabel").innerHTML= thegraph.getnodeusingid(id).label+"";
+                  graphstructureselectednodeid = id; // selected node's id in graph 1
+                },
+              },
+            },
+            edges:{
+              chosen:{
+                edge:  function(values, id, selected, hovering) {
+                  graphstructureselectededgefromid = edges.get(id).from;
+                  graphstructureselectededgetoid = edges.get(id).to;
+                  document.getElementById("selectededgelabel").innerHTML= "("+thegraph.getnodeusingid(graphstructureselectededgefromid).label+","+thegraph.getnodeusingid(graphstructureselectededgetoid).label+")";
+                }
+              }
+            },
+          };
+          network = new vis.Network(container, data, options);
+        }
+        if(canvasname == "n2mynetwork"){
+          n2nodes = new vis.DataSet(tempnodes);
+          n2edges = new vis.DataSet(tempedges);
+          var container = document.getElementById(canvasname);
+          var data = {
+            nodes: n2nodes,
+            edges: n2edges,
+          };
+          var options = {
+            nodes: {
+              chosen: {
+                node: function(values, id, selected, hovering) {
+                  var degreemessage = thegraph.getnodeusingid(id).adjacentnodeslist.length+"";
+                  document.getElementById("n2degofvertex").innerHTML= degreemessage;
+                  document.getElementById("n2selectedvertexlabel").innerHTML= thegraph.getnodeusingid(id).label+"";
+                  n2graphstructureselectednodeid = id; // selected node's id in graph 1
+                },
+              },
+            },
+            edges:{
+              chosen:{
+                edge:  function(values, id, selected, hovering) {
+                  n2graphstructureselectededgefromid = n2edges.get(id).from;
+                  n2graphstructureselectededgetoid = n2edges.get(id).to;
+                  document.getElementById("n2selectededgelabel").innerHTML= "("+thegraph.getnodeusingid(n2graphstructureselectededgefromid).label+","+thegraph.getnodeusingid(n2graphstructureselectededgetoid).label+")";
+                }
+              }
+            }
+          };
+          n2network = new vis.Network(container, data, options);
+        }
+        if(canvasname == "combmynetwork"){
+          combnodes = new vis.DataSet(tempnodes);
+          combedges = new vis.DataSet(tempedges);
+          var container = document.getElementById(canvasname);
+          var data = {
+            nodes: combnodes,
+            edges: combedges,
+          };
+          var options = {
+            nodes: {
+              chosen: {
+                node: function(values, id, selected, hovering) {
+                  var degreemessage = thegraph.getnodeusingid(id).adjacentnodeslist.length+"";
+                  document.getElementById("combdegofvertex").innerHTML= degreemessage;
+                  document.getElementById("combselectedvertexlabel").innerHTML= thegraph.getnodeusingid(id).label+"";
+                  document.getElementById("combnodefunction").innerHTML= JSON.stringify(thegraph.getnodeusingid(id).functionasdict);
+                  combgraphstructureselectednodeid = id; // selected node's id in graph 1
+
+                },
+              },
+            },
+            edges:{
+              chosen:{
+                edge:  function(values, id, selected, hovering) {
+                  combgraphstructureselectededgefromid = combedges.get(id).from;
+                  combgraphstructureselectededgetoid = combedges.get(id).to;
+                  document.getElementById("combselectededgelabel").innerHTML= "("+thegraph.getnodeusingid(combgraphstructureselectededgefromid).label+" , "+thegraph.getnodeusingid(combgraphstructureselectededgetoid).label+")";
+                }
+              }
+            }
+          };
+          combnetwork = new vis.Network(container, data, options);
+        }
+
+
+        // graph attributes display
+        if(canvasname=="mynetwork"){
+          document.getElementById("maximumdegree").innerHTML= thegraph.maxdegree+"";
+          document.getElementById("minimumdegree").innerHTML= thegraph.mindegree+"";
+          document.getElementById("averagedegree").innerHTML= thegraph.averagedegree+"";
+          document.getElementById("isbasicodd").innerHTML= thegraph.isbasicodd+"";
+          document.getElementById("isbipartite").innerHTML= thegraph.isbipartite +"";
+          document.getElementById("hasgoodpartition").innerHTML= thegraph.hasgoodpartition +"";
+          document.getElementById("hashamiltonianpath").innerHTML = thegraph.hashamiltonianpath+"";
+          document.getElementById("ahamiltonianpath").innerHTML = thegraph.ahamiltonianpath+"";
+          var hasperfectmatching = thegraph.maxmatching.length == Math.ceil(thegraph.graphlist.length /2);
+          document.getElementById("hasperfectmatching").innerHTML= hasperfectmatching +"";
+          document.getElementById("sizeofmaximummatching").innerHTML = thegraph.maxmatching.length+"";
+          document.getElementById("amaximummatching").innerHTML = thegraph.maxmatching+"";
+          document.getElementById("burningnumber").innerHTML = thegraph.minburnseqlen+"";
+          document.getElementById("burningnumbersequence").innerHTML = thegraph.minburningsequence+"";
+          document.getElementById("iscaterpillartree").innerHTML = thegraph.iscaterpillar+"";
+          document.getElementById("isgracefulid").innerHTML = thegraph.hasgracefullabelling+"";
+          document.getElementById("agracefullabelid").innerHTML = thegraph.agracefullabel+"";
+
+          var adjmatrixTable = document.getElementById("adjacentmatrixtableid");
+          clearTable("adjacentmatrixtableid");
+          var tblBody = document.createElement("tbody");
+          tblBody.appendChild(createTitleRow("Ajacency Matrix"));
+
+          var headerRow = document.createElement("tr");
+          headerRow.appendChild(makecell(" "));
+          for(var i =0 ; i < thegraph.graphlist.length; i++){
+            headerRow.appendChild(makecell(" "+thegraph.graphlist[i].label));
+          }
+          // console.log("header row append over");
+          tblBody.appendChild(headerRow);
+          for(var i = 0; i< thegraph.adjmatrix.length ; i++){
+            var headerRow = document.createElement("tr");
+            headerRow.appendChild(makecell(" "+thegraph.graphlist[i].label+" "));
+            for(var j = 0; j< thegraph.adjmatrix.length ; j++){
+              headerRow.appendChild(makecell(" "+thegraph.adjmatrix[i][j]+" "));
+            }
+            tblBody.appendChild(headerRow);
+          }
+          adjmatrixTable.appendChild(tblBody);
+        }
+        if(canvasname=="n2mynetwork"){
+          document.getElementById("n2maximumdegree").innerHTML= thegraph.maxdegree+"";
+          document.getElementById("n2minimumdegree").innerHTML= thegraph.mindegree+"";
+          document.getElementById("n2averagedegree").innerHTML= thegraph.averagedegree+"";
+          document.getElementById("n2isbasicodd").innerHTML= thegraph.isbasicodd+"";
+          document.getElementById("n2isbipartite").innerHTML= thegraph.isbipartite +"";
+          document.getElementById("n2hasgoodpartition").innerHTML= thegraph.hasgoodpartition +"";
+          document.getElementById("n2hashamiltonianpath").innerHTML = thegraph.hashamiltonianpath+"";
+          document.getElementById("n2ahamiltonianpath").innerHTML = thegraph.ahamiltonianpath+"";
+          var hasperfectmatching = thegraph.maxmatching.length == Math.ceil(thegraph.graphlist.length /2);
+          document.getElementById("n2hasperfectmatching").innerHTML= hasperfectmatching +"";
+          document.getElementById("n2sizeofmaximummatching").innerHTML = thegraph.maxmatching.length+"";
+          document.getElementById("n2amaximummatching").innerHTML = thegraph.maxmatching+"";
+          document.getElementById("n2burningnumber").innerHTML = thegraph.minburnseqlen+"";
+          document.getElementById("n2burningnumbersequence").innerHTML = thegraph.minburningsequence+"";
+          document.getElementById("n2iscaterpillartree").innerHTML = thegraph.iscaterpillar+"";
+          document.getElementById("n2isgracefulid").innerHTML = thegraph.hasgracefullabelling+"";
+          document.getElementById("n2agracefullabelid").innerHTML = thegraph.agracefullabel+"";
+
+          var adjmatrixTable = document.getElementById("n2adjacentmatrixtableid");
+          clearTable("n2adjacentmatrixtableid");
+          var tblBody = document.createElement("tbody");
+          tblBody.appendChild(createTitleRow("Ajacency Matrix"));
+
+          var headerRow = document.createElement("tr");
+          headerRow.appendChild(makecell(" "));
+          for(var i =0 ; i < thegraph.graphlist.length; i++){
+            headerRow.appendChild(makecell(" "+thegraph.graphlist[i].label));
+          }
+          // console.log("header row append over");
+          tblBody.appendChild(headerRow);
+          for(var i = 0; i< thegraph.adjmatrix.length ; i++){
+            var headerRow = document.createElement("tr");
+            headerRow.appendChild(makecell(" "+thegraph.graphlist[i].label+" "));
+            for(var j = 0; j< thegraph.adjmatrix.length ; j++){
+              headerRow.appendChild(makecell(" "+thegraph.adjmatrix[i][j]+" "));
+            }
+            tblBody.appendChild(headerRow);
+          }
+          adjmatrixTable.appendChild(tblBody);
+        }
+        if(canvasname=="combmynetwork"){
+          document.getElementById("combmaximumdegree").innerHTML= thegraph.maxdegree+"";
+          document.getElementById("combminimumdegree").innerHTML= thegraph.mindegree+"";
+          document.getElementById("combaveragedegree").innerHTML= thegraph.averagedegree+"";
+          document.getElementById("combisbasicodd").innerHTML= thegraph.isbasicodd+"";
+          document.getElementById("combisbipartite").innerHTML= thegraph.isbipartite +"";
+          document.getElementById("combhasgoodpartition").innerHTML= thegraph.hasgoodpartition +"";
+          document.getElementById("combhashamiltonianpath").innerHTML = thegraph.hashamiltonianpath+"";
+          document.getElementById("combahamiltonianpath").innerHTML = thegraph.ahamiltonianpath+"";
+          var hasperfectmatching = thegraph.maxmatching.length == Math.ceil(thegraph.graphlist.length /2);
+          document.getElementById("combhasperfectmatching").innerHTML= hasperfectmatching +"";
+          document.getElementById("combsizeofmaximummatching").innerHTML = thegraph.maxmatching.length+"";
+          document.getElementById("combamaximummatching").innerHTML = thegraph.maxmatching+"";
+          document.getElementById("combburningnumber").innerHTML = thegraph.minburnseqlen+"";
+          document.getElementById("combburningnumbersequence").innerHTML = thegraph.minburningsequence+"";
+          document.getElementById("combiscaterpillartree").innerHTML = thegraph.iscaterpillar+"";
+          document.getElementById("combisgracefulid").innerHTML = thegraph.hasgracefullabelling+"";
+          document.getElementById("combagracefullabelid").innerHTML = thegraph.agracefullabel+"";
+
+          var adjmatrixTable = document.getElementById("combadjacentmatrixtableid");
+          clearTable("combadjacentmatrixtableid");
+          var tblBody = document.createElement("tbody");
+          tblBody.appendChild(createTitleRow("Ajacency Matrix"));
+
+          var headerRow = document.createElement("tr");
+          headerRow.appendChild(makecell(" "));
+          for(var i =0 ; i < thegraph.graphlist.length; i++){
+            headerRow.appendChild(makecell(" "+thegraph.graphlist[i].label));
+          }
+          // console.log("header row append over");
+          tblBody.appendChild(headerRow);
+          for(var i = 0; i< thegraph.adjmatrix.length ; i++){
+            var headerRow = document.createElement("tr");
+            headerRow.appendChild(makecell(" "+thegraph.graphlist[i].label+" "));
+            for(var j = 0; j< thegraph.adjmatrix.length ; j++){
+              headerRow.appendChild(makecell(" "+thegraph.adjmatrix[i][j]+" "));
+            }
+            tblBody.appendChild(headerRow);
+          }
+          adjmatrixTable.appendChild(tblBody);
+        }
+      }
+
+
+
+
+
+
+      /*****************************************************************************************
+       * 
+       * Methods for graph 1(mynetwork)
+       * 
+       * **************************************************************************************/
+      function addNode() {
+        nodelabel = document.getElementById("nname").value;
+        var tempgraph = (graphstructurelist[currentgraphstructureindex].addvertextograph(nodelabel))[0];
+        console.log(tempgraph);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+        // history functionaly checked
+      }
+      function addEdge(){
+        //get input from user 
+        var srcLabel = document.getElementById("edgenname1").value;
+        var destLabel = document.getElementById("edgenname2").value;
+        if (srcLabel == null || destLabel == null || srcLabel == destLabel ){
+          document.getElementById("tagMessage").innerHTML= "nodes should have label and Source can't be the same as destination";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].addedgetograph(srcLabel, destLabel);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+        // history checked
+      }
+      function generatecomplete(){
+        var nnode = parseInt(document.getElementById("completenvertices").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].becomecompletegraph(nnode);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+        //history checked
+      }
+
+      function createturan(){
+        var nnode = parseInt(document.getElementById("turannnode").value);
+        var nparts = parseInt(document.getElementById("turannparts").value);
+        if(isNaN(nnode) || isNaN(nparts)){ 
+          document.getElementById("tagMessage").innerHTML= "number of node and number of parts must be integer";
+          return false;
+        }
+        if(nparts > nnode){
+          document.getElementById("tagMessage").innerHTML= "Number of parts too large.";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].becometurangraph(nnode, nparts);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function generatepath(){
+        var nnode = parseInt(document.getElementById("pathnvertices").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].becomepathgraph(nnode);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function generatestar(){
+        var nnode = parseInt(document.getElementById("starnvertices").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].becomestargraph(nnode);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function createcompletebipartite(){
+        var nnodea = parseInt(document.getElementById("completebipartitennodea").value);
+        var nnodeb = parseInt(document.getElementById("completebipartitennodeb").value);
+        if(isNaN(nnodea) || isNaN(nnodeb)){ 
+          document.getElementById("tagMessage").innerHTML= "number of nodes must be integer";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].becomecompletebipartitegraph(nnodea, nnodeb);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function creategridgraph(){
+        var nnoder = parseInt(document.getElementById("gridnrows").value);
+        var nnodec = parseInt(document.getElementById("gridncolumns").value);
+        if(isNaN(nnoder) || isNaN(nnodec)){ 
+          document.getElementById("tagMessage").innerHTML= "number rows and columns must be integer";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].becomegridgraph(nnoder, nnodec);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function deleteselectednode(){
+        var tempgraph = graphstructurelist[currentgraphstructureindex].deletevertexbyid(graphstructureselectednodeid);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function deleteselectededge(){
+        var tempgraph = graphstructurelist[currentgraphstructureindex].deleteedgebyfromtoids(graphstructureselectededgefromid,graphstructureselectededgetoid); // selected node's id in graph 1
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function createcyclicgraph(){
+        var nnode = parseInt(document.getElementById("cyclicnnode").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].becomecyclicgraph(nnode);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function createrandomtree(){
+        var nnode = parseInt(document.getElementById("randomtreennode").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].becomerandomtree(nnode);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function createcaterpillartree(){
+        var nnode = parseInt(document.getElementById("caterpillartreennode").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = graphstructurelist[currentgraphstructureindex].becomecaterpillartree(nnode);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function subdivideselectededge(){
+        var tempgraph = graphstructurelist[currentgraphstructureindex].subdivideedgebyfromtoids(graphstructureselectededgefromid,graphstructureselectededgetoid);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function contractselectededge(){
+        var tempgraph = graphstructurelist[currentgraphstructureindex].contractedgebyfromtoids(graphstructureselectededgefromid,graphstructureselectededgetoid);
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function undooperation(){
+        if(currentgraphstructureindex -1 >= 0){
+          currentgraphstructureindex = currentgraphstructureindex -1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+      function redooperation(){
+        if(currentgraphstructureindex +1 < graphstructurelist.length){
+          currentgraphstructureindex = currentgraphstructureindex +1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]);
+      }
+
+
+   
+      /*****************************************************************************************
+       * 
+       * Methods for graph 2(n2mynetwork)
+       * 
+       * **************************************************************************************/
+      function n2addNode() {
+        var nodelabel = document.getElementById("n2nname").value;
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].addvertextograph(nodelabel)[0];
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]);
+      }
+      function n2addEdge(){
+        //get input from user 
+        var srcLabel = document.getElementById("n2edgenname1").value;
+        var destLabel = document.getElementById("n2edgenname2").value;
+        if (srcLabel == null || destLabel == null || srcLabel == destLabel ){
+          document.getElementById("n2tagMessage").innerHTML= "nodes should have label and Source can't be the same as destination";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].addedgetograph(srcLabel, destLabel);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]);       
+      }
+      function n2generatecomplete(){
+        var nnode = parseInt(document.getElementById("n2completenvertices").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("n2tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].becomecompletegraph(nnode);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]);       
+      }
+
+      function n2createturan(){
+        var nnode = parseInt(document.getElementById("n2turannnode").value);
+        var nparts = parseInt(document.getElementById("n2turannparts").value);
+        if(isNaN(nnode) || isNaN(nparts)){ 
+          document.getElementById("n2tagMessage").innerHTML= "number of node and number of parts must be integer";
+          return false;
+        }
+        if(nparts > nnode){
+          document.getElementById("n2tagMessage").innerHTML= "Number of parts too large.";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].becometurangraph(nnode, nparts);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]);   
+      }
+      function n2generatepath(){
+        var nnode = parseInt(document.getElementById("n2pathnvertices").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("n2tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].becomepathgraph(nnode);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]);   
+      }
+      function n2generatestar(){
+        var nnode = parseInt(document.getElementById("n2starnvertices").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("n2tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].becomestargraph(nnode);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+      function n2createcompletebipartite(){
+        var nnodea = parseInt(document.getElementById("n2completebipartitennodea").value);
+        var nnodeb = parseInt(document.getElementById("n2completebipartitennodeb").value);
+        if(isNaN(nnodea) || isNaN(nnodeb)){ 
+          document.getElementById("n2tagMessage").innerHTML= "number of nodes must be integer";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].becomecompletebipartitegraph(nnodea, nnodeb);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+      function n2creategridgraph(){
+        var nnoder = parseInt(document.getElementById("n2gridnrows").value);
+        var nnodec = parseInt(document.getElementById("n2gridncolumns").value);
+        if(isNaN(nnoder) || isNaN(nnodec)){ 
+          document.getElementById("tagMessage").innerHTML= "number rows and columns must be integer";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].becomegridgraph(nnoder, nnodec);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+      function n2deleteselectednode(){
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].deletevertexbyid(n2graphstructureselectednodeid);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+      function n2deleteselectededge(){
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].deleteedgebyfromtoids(n2graphstructureselectededgefromid,n2graphstructureselectededgetoid);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+      function n2createcyclicgraph(){
+        var nnode = parseInt(document.getElementById("n2cyclicnnode").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("n2tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].becomecyclicgraph(nnode);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+      function n2createrandomtree(){
+        var nnode = parseInt(document.getElementById("n2randomtreennode").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("n2tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].becomerandomtree(nnode);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+      function n2createcaterpillartree(){
+        var nnode = parseInt(document.getElementById("n2caterpillartreennode").value);
+        if(isNaN(nnode)){ 
+          document.getElementById("tagMessage").innerHTML= "number of node must be integer";
+          return false;
+        }
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].becomecaterpillartree(nnode);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]);
+      }
+      function n2subdivideselectededge(){
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].subdivideedgebyfromtoids(n2graphstructureselectededgefromid,n2graphstructureselectededgetoid); 
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+      function n2contractselectededge(){
+        var tempgraph = n2graphstructurelist[n2currentgraphstructureindex].contractedgebyfromtoids(n2graphstructureselectededgefromid,n2graphstructureselectededgetoid);
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+      function n2undooperation(){
+        if(n2currentgraphstructureindex -1 >= 0){
+          n2currentgraphstructureindex = n2currentgraphstructureindex -1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]);
+      }
+      function n2redooperation(){
+        if(n2currentgraphstructureindex +1 < n2graphstructurelist.length){
+          n2currentgraphstructureindex = n2currentgraphstructureindex +1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]);
+      }
+
+
+
+      /*****************************************************************************************
+       * 
+       * Methods for combine graph (combmynetwork)
+       * 
+       * **************************************************************************************/
+      function generateexponentialgraph(){
+        // get input from user
+        var gselect = document.getElementsByName('expGSelect');
+        var gselect_value;
+        for(var i = 0; i < gselect.length; i++){
+            if(gselect[i].checked){
+                gselect_value = gselect[i].value;
+            }
+        }
+        var hselect = document.getElementsByName('expHSelect');
+        var hselect_value;
+        for(var i = 0; i < hselect.length; i++){
+            if(hselect[i].checked){
+                hselect_value = hselect[i].value;
+            }
+        }
+        var tempgraph =null;
+        if(gselect_value == "g1"){
+          if(hselect_value == "g1"){
+            tempgraph = graphstructurelist[currentgraphstructureindex].getexponentialgraph(graphstructurelist[currentgraphstructureindex]);
+          }
+          else{
+            tempgraph = graphstructurelist[currentgraphstructureindex].getexponentialgraph(n2graphstructurelist[n2currentgraphstructureindex]);
+          }
+        }
+        else{
+          if(hselect_value == "g1"){
+            tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getexponentialgraph(graphstructurelist[currentgraphstructureindex]);
+          }
+          else{
+            tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getexponentialgraph(n2graphstructurelist[n2currentgraphstructureindex]);
+          }
+        }
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+      function generatestrongproduct(){
+        console.log("strong product");
+        // get input from user
+        var gselect = document.getElementsByName('strongproductGSelect');
+        var gselect_value;
+        for(var i = 0; i < gselect.length; i++){
+            if(gselect[i].checked){
+                gselect_value = gselect[i].value;
+            }
+        }
+        var hselect = document.getElementsByName('strongproductHSelect');
+        var hselect_value;
+        for(var i = 0; i < hselect.length; i++){
+            if(hselect[i].checked){
+                hselect_value = hselect[i].value;
+            }
+        }
+        var  tempgrah = null;
+        if(gselect_value == "g1"){
+          if(hselect_value == "g1"){
+            tempgraph = graphstructurelist[currentgraphstructureindex].getstrongproductgraph(graphstructurelist[currentgraphstructureindex]);
+          }
+          else{
+            tempgraph = graphstructurelist[currentgraphstructureindex].getstrongproductgraph(n2graphstructurelist[n2currentgraphstructureindex]);
+          }
+        }
+        else{
+          if(hselect_value == "g1"){
+            tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getstrongproductgraph(graphstructurelist[currentgraphstructureindex]);
+          }
+          else{
+            tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getstrongproductgraph(n2graphstructurelist[n2currentgraphstructureindex]);
+          }
+        }
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+      function generatecartesianproduct(){
+         // get input from user
+        var gselect = document.getElementsByName('cartesianproductGSelect');
+        var gselect_value;
+        for(var i = 0; i < gselect.length; i++){
+            if(gselect[i].checked){
+                gselect_value = gselect[i].value;
+            }
+        }
+        var hselect = document.getElementsByName('cartesianproductHSelect');
+        var hselect_value;
+        for(var i = 0; i < hselect.length; i++){
+            if(hselect[i].checked){
+                hselect_value = hselect[i].value;
+            }
+        }
+        var tempgraph = null;
+        if(gselect_value == "g1"){
+          if(hselect_value == "g1"){      // improve efficiency of adjacencny matrix computation
+            tempgraph = graphstructurelist[currentgraphstructureindex].getcartesianproductgraph(graphstructurelist[currentgraphstructureindex]);
+          }
+          else{
+            tempgraph = graphstructurelist[currentgraphstructureindex].getcartesianproductgraph(n2graphstructurelist[n2currentgraphstructureindex]);
+          }
+        }
+        else{
+          if(hselect_value == "g1"){
+            tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getcartesianproductgraph(graphstructurelist[currentgraphstructureindex]);
+          }
+          else{
+            tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getcartesianproductgraph(n2graphstructurelist[n2currentgraphstructureindex]);
+          }
+        }
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+      function generatecategoricalproduct(){
+        // get input from user
+        var gselect = document.getElementsByName('categoricalproductGSelect');
+        var gselect_value;
+        for(var i = 0; i < gselect.length; i++){
+            if(gselect[i].checked){
+                gselect_value = gselect[i].value;
+            }
+        }
+        var hselect = document.getElementsByName('categoricalproductHSelect');
+        var hselect_value;
+        for(var i = 0; i < hselect.length; i++){
+            if(hselect[i].checked){
+                hselect_value = hselect[i].value;
+            }
+        }
+        var tempgraph = null;
+        if(gselect_value == "g1"){
+          if(hselect_value == "g1"){
+            tempgraph = graphstructurelist[currentgraphstructureindex].getcategoricalproductgraph(graphstructurelist[currentgraphstructureindex]);
+          }
+          else{
+            tempgraph = graphstructurelist[currentgraphstructureindex].getcategoricalproductgraph(n2graphstructurelist[n2currentgraphstructureindex]);
+          }
+        }
+        else{
+          if(hselect_value == "g1"){
+            tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getcategoricalproductgraph(graphstructurelist[currentgraphstructureindex]);
+          }
+          else{
+            tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getcategoricalproductgraph(n2graphstructurelist[n2currentgraphstructureindex]);
+          }
+        }
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+
+      function generatelinegraph(){
+        var gselect = document.getElementsByName('lineGSelect');
+        var gselect_value;
+        for(var i = 0; i < gselect.length; i++){
+            if(gselect[i].checked){
+                gselect_value = gselect[i].value;
+            }
+        }
+        var tempgraph = null;
+        if(gselect_value =="g1"){
+          tempgraph = graphstructurelist[currentgraphstructureindex].getlinegraph();
+        }
+        else{
+          tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getlinegraph();
+        }
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+
+      function generatecomplementgraph(){
+        var gselect = document.getElementsByName('complementGSelect');
+        var gselect_value;
+        for(var i = 0; i < gselect.length; i++){
+            if(gselect[i].checked){
+                gselect_value = gselect[i].value;
+            }
+        }
+        var tempgraph = null;
+        if(gselect_value =="g1"){
+          tempgraph = graphstructurelist[currentgraphstructureindex].getcomplementgraph();
+        }
+        else{
+          tempgraph = n2graphstructurelist[n2currentgraphstructureindex].getcomplementgraph();
+        }
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+
+      function combdeleteselectednode(){
+        var tempgraph = combgraphstructurelist[combcurrentgraphstructureindex].deletevertexbyid(combgraphstructureselectednodeid); 
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+      function combdeleteselectededge(){
+        var tempgraph = combgraphstructurelist[combcurrentgraphstructureindex].deleteedgebyfromtoids(combgraphstructureselectededgefromid,combgraphstructureselectededgetoid); 
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+      function combsubdivideselectededge(){
+        var tempgraph = combgraphstructurelist[combcurrentgraphstructureindex].subdivideedgebyfromtoids(combgraphstructureselectededgefromid,combgraphstructureselectededgetoid); 
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+      function combcontractselectededge(){
+        var tempgraph = combgraphstructurelist[combcurrentgraphstructureindex].contractedgebyfromtoids(combgraphstructureselectededgefromid,combgraphstructureselectededgetoid);
+        if(combcurrentgraphstructureindex < combgraphstructurelist.length-1){
+          combgraphstructurelist[combcurrentgraphstructureindex+1] = tempgraph;
+          combcurrentgraphstructureindex = 1 + combcurrentgraphstructureindex;
+        }
+        else{
+          combgraphstructurelist.push(tempgraph);
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex + 1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]); 
+      }
+      function combundooperation(){
+        if(combcurrentgraphstructureindex -1 >= 0){
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex -1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]);
+      }
+      function combredooperation(){
+        if(combcurrentgraphstructureindex +1 < combgraphstructurelist.length){
+          combcurrentgraphstructureindex = combcurrentgraphstructureindex +1;
+        }
+        updateGraph("combmynetwork",combgraphstructurelist[combcurrentgraphstructureindex]);
+      }
+      function combcopytograph1(){
+        var tempgraph = combgraphstructurelist[combcurrentgraphstructureindex].makeaselfcopy();
+        if(currentgraphstructureindex < graphstructurelist.length-1){
+          graphstructurelist[currentgraphstructureindex+1] = tempgraph;
+          currentgraphstructureindex = 1 + currentgraphstructureindex;
+        }
+        else{
+          graphstructurelist.push(tempgraph);
+          currentgraphstructureindex = currentgraphstructureindex + 1;
+        }
+        updateGraph("mynetwork",graphstructurelist[currentgraphstructureindex]); 
+      }
+      function combcopytograph2(){
+        var tempgraph = combgraphstructurelist[combcurrentgraphstructureindex].makeaselfcopy();
+        if(n2currentgraphstructureindex < n2graphstructurelist.length-1){
+          n2graphstructurelist[n2currentgraphstructureindex+1] = tempgraph;
+          n2currentgraphstructureindex = 1 + n2currentgraphstructureindex;
+        }
+        else{
+          n2graphstructurelist.push(tempgraph);
+          n2currentgraphstructureindex = n2currentgraphstructureindex + 1;
+        }
+        updateGraph("n2mynetwork",n2graphstructurelist[n2currentgraphstructureindex]); 
+      }
+
+      // Methods to manupulate graph
+      startNetwork()
+
+      // todo
+      // 1) update the code so that compatible to graph class
+      // 2) fix edge no label problem
+      // fix graph cbnation html
+      // improve efficiency of adjacencny matrix computation
+      // 3) in computemaximummatching(){ after unsucessful search for an augmenting path starting from a vertex, can it ever be part of an augmenting path later on ?
+      // bug in max matching, check turan n=6, r = 2.
+
+      //bug
+      // after creating a second graph in new canvas, clicing on first graph edge dosen't work.
+
+    </script>
+  </body>
+
+</html>
